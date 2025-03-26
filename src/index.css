@@ -1,0 +1,15 @@
+/* added global styling */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --mainColor: red;
+}
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
