@@ -1,0 +1,63 @@
+.signIn,
+.signup {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+.view {
+  background-color: var(--secondColor);
+  padding: 50px;
+  overflow-y: hidden;
+}
+.view .content {
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.5;
+}
+.view .image {
+  overflow-y: hidden;
+}
+.fields {
+  padding: 30px;
+  width: 80%;
+  margin-block: auto;
+}
+.fields > h1 {
+  margin-bottom: 30px;
+}
+.fields div:first-child {
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+form input {
+  display: block;
+  margin-bottom: 15px;
+  padding: var(--section-padding);
+  background-color: #d1cdcd;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+}
+form input::placeholder {
+  color: #aaa;
+}
+.forgetPassword {
+  display: flex;
+  justify-content: space-between;
+}
+.forgetPassword input {
+  display: block;
+  width: fit-content;
+  color: var(--thirdColor);
+}
+.submitForm {
+  display: flex;
+  gap: 15px;
+}
+.submitForm input {
+  color: white;
+  background-color: var(--thirdColor);
+}
+.fields div:last-child {
+  text-align: center;
+}

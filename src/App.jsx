@@ -1,23 +1,27 @@
-// import { useState } from "react";
-// import reactLogo from "./assets/react.svg";
-// import viteLogo from "/vite.svg";
-// import { Fragment } from "react";
-import Child from "./Components/Child";
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
-
+import SignUp from "./Components/SignUp";
+import SignIn from "./Components/SignIn";
+import NotFound from "./Components/NotFound";
+import Home from "./Components/Home";
+import ProtectedRoute from "./ProtectedRoute";
 function App() {
-  const [count, setcount] = useState(0);
   return (
     <>
-      <div>count is:{count}</div>
-      <button type="button" onClick={() => setcount((pre) => pre + 1)}>
-        click to increment
-      </button>
-      <button type="button" onClick={() => setcount(count - 1)}>
-        click to decrement
-      </button>
-      <Child count={[count, setcount]} />
+      <Routes>
+        <Route path="/" element={<SignUp />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/SignIn" element={<SignIn />} />
+        <Route path="*" element={<NotFound />} />
+        <Route
+          path="/Home"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </>
   );
 }
