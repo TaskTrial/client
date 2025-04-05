@@ -2,6 +2,11 @@ import clipMessage from "../assets/clip-message.png";
 import "./Styles/SignIn.css";
 import { Link } from "react-router-dom";
 function SignUp() {
+  fetch("http://localhost:3000/api/auth/signup")
+    .then((res) => {
+      res.json();
+    })
+    .then((data) => console.log(data));
   return (
     <>
       <div className="signup">
@@ -18,9 +23,22 @@ function SignUp() {
         </div>
         <div className="fields">
           <div>
-            <h1>Sign Up</h1>
+            <h1 style={{ marginBottom: "0" }}>Sign Up</h1>
             <p>See what is going on with your business</p>
           </div>
+          {/* Google Button */}
+          <button className="google-btn">
+            <img
+              src="https://developers.google.com/identity/images/g-logo.png"
+              alt="Google"
+              className="google-icon"
+            />
+            Continue with Google
+          </button>
+          <div className="divider">
+            <span>----or Sign up with Email----</span>
+          </div>
+          {/* ////////////////////// */}
           <form action="" method="post">
             <label htmlFor="username">User Name:</label> <br />
             <input

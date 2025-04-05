@@ -18,11 +18,24 @@ function SignIn() {
           </div>
         </div>
         <div className="fields">
-          <h1>Welcome again!</h1>
           <div>
+            <h1>Welcome Again!</h1>
             <h2>Login to your Account</h2>
             <p>See what is going on with your business</p>
           </div>
+          {/* Google Button */}
+          <button className="google-btn">
+            <img
+              src="https://developers.google.com/identity/images/g-logo.png"
+              alt="Google"
+              className="google-icon"
+            />
+            Continue with Google
+          </button>
+          <div className="divider">
+            <span>----or Sign In with Email----</span>
+          </div>
+          {/* ////////////////////// */}
           <form action="" method="post">
             <label htmlFor="email"> Email:</label> <br />
             <input
