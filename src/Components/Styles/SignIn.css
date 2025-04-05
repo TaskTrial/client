@@ -1,3 +1,6 @@
+body {
+  background: #caae9d;
+}
 .signIn,
 .signup {
   display: flex;
@@ -15,11 +18,17 @@
   line-height: 1.5;
 }
 .view .image {
-  overflow-y: hidden;
+  width: 100%;
+  overflow: hidden;
+}
+.view .image img {
+  width: 100%;
+  max-width: 800px;
+  max-height: 500px;
 }
 .fields {
   padding: 30px;
-  width: 80%;
+  min-width: 40%;
   margin-block: auto;
 }
 .fields > h1 {
@@ -60,4 +69,13 @@ form input::placeholder {
 }
 .fields div:last-child {
   text-align: center;
+}
+/* phone */
+@media screen and (max-width: 767px) {
+  .view {
+    display: none;
+  }
+  .fields {
+    width: 100%;
+  }
 }

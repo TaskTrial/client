@@ -14,12 +14,7 @@ function SignIn() {
             progress happen!
           </div>
           <div className="image">
-            <img
-              src={clipMessage}
-              alt="not found"
-              width="800px"
-              height="500px"
-            />
+            <img src={clipMessage} alt="not found" />
           </div>
         </div>
         <div className="fields">
@@ -35,6 +30,7 @@ function SignIn() {
               name="email"
               id="email"
               placeholder="enter your email"
+              required
             />
             <label htmlFor="username">Password:</label> <br />
             <input
@@ -42,6 +38,7 @@ function SignIn() {
               name="password"
               id="password"
               placeholder="enter your password"
+              required
             />
             <div className="forgetPassword">
               <input type="checkbox" name="" id="" />
