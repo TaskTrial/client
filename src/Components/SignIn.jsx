@@ -58,7 +58,10 @@ function SignIn() {
               required
             />
             <div className="forgetPassword">
-              <input type="checkbox" name="" id="" />
+              <div>
+                <input type="checkbox" name="" id="check" />
+                <label htmlFor="check">remember me</label>
+              </div>
               <Link style={{ color: "var(--thirdColor)" }} to="/SignUp">
                 forget password?
               </Link>
@@ -70,7 +73,7 @@ function SignIn() {
           </form>
           <div>
             Not Registered Yet?
-            <Link style={{ color: "var(--thirdColor)" }} to="/">
+            <Link style={{ color: "var(--thirdColor)" }} to="/SignUp">
               Create an account
             </Link>
           </div>

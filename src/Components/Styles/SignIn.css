@@ -95,19 +95,28 @@ form input:focus {
   outline: none;
   border: 1px solid var(--thirdColor);
 }
-/* form input[type="checkbox"] {
-  accent-color: var(--thirdColor);
-} */
-form input:checked {
-  accent-color: var(--thirdColor);
-}
+
 .forgetPassword {
   display: flex;
   justify-content: space-between;
 }
+.forgetPassword div {
+  margin-bottom: 0 !important;
+  display: flex;
+  gap: 5px;
+}
 .forgetPassword input {
   display: block;
   width: fit-content;
+  color: var(--thirdColor);
+}
+/* form input:checked {
+  accent-color: var(--thirdColor); 
+} */
+form .forgetPassword input[type="checkbox"],
+form .forgetPassword label {
+  accent-color: var(--thirdColor);
+  margin-bottom: 0;
   color: var(--thirdColor);
 }
 .submitForm {
