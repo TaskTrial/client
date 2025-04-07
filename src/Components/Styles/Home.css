@@ -3,6 +3,10 @@
   grid-template-columns: auto 1fr;
   width: 100%;
 }
+.toggle-home {
+  grid-template-columns: 1fr;
+}
+
 .main-links {
   background-color: #342e2e;
   height: 100vh;

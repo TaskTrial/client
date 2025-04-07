@@ -31,7 +31,7 @@ function Home() {
       >
         {isSidebarOpen ? "<" : ">"}
       </button>
-      <div className="Home">
+      <div className={`Home ${isSidebarOpen ? "" : "toggle-home"}`}>
         <div className={`main-links ${isSidebarOpen ? "" : "sidebar-hidden"}`}>
           <h1>task trial</h1>
           <div className="create-project">

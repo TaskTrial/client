@@ -10,7 +10,7 @@ function Dashboard() {
       }}
     >
       Dashboard
-      <p>Lorem, ipsum dolor.</p>
+      <p>Lorem, ipsum dolor.gtytyukmu,i,iu</p>
       <p>Lorem, ipsum dolor.</p>
       <p>Lorem, ipsum dolor.</p>
       <p>Lorem, ipsum dolor.</p>
