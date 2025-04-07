@@ -1,8 +1,16 @@
 import clipMessage from "../assets/clip-message.png";
 import "./Styles/SignIn.css";
-import { Link } from "react-router-dom";
+import { FaGoogle } from "react-icons/fa";
 
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function SignIn() {
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    localStorage.setItem("auth", "true");
+    navigate("/Home");
+  };
   return (
     <>
       <div className="signIn">
@@ -25,18 +33,14 @@ function SignIn() {
           </div>
           {/* Google Button */}
           <button className="google-btn">
-            <img
-              src="https://developers.google.com/identity/images/g-logo.png"
-              alt="Google"
-              className="google-icon"
-            />
+            <FaGoogle className="google-icon" />
             Continue with Google
           </button>
           <div className="divider">
             <span>----or Sign In with Email----</span>
           </div>
           {/* ////////////////////// */}
-          <form action="" method="post">
+          <form onSubmit={handleSubmit} action="" method="post">
             <label htmlFor="email"> Email:</label> <br />
             <input
               type="email"

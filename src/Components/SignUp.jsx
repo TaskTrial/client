@@ -1,7 +1,14 @@
 import clipMessage from "../assets/clip-message.png";
 import "./Styles/SignIn.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function SignUp() {
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    localStorage.setItem("auth", "true");
+    navigate("/Home");
+  };
   fetch("http://localhost:3000/api/auth/signup")
     .then((res) => {
       res.json();
@@ -39,7 +46,7 @@ function SignUp() {
             <span>----or Sign up with Email----</span>
           </div>
           {/* ////////////////////// */}
-          <form action="" method="post">
+          <form onSubmit={handleSubmit} action="" method="post">
             <label htmlFor="username">User Name:</label> <br />
             <input
               type="text"

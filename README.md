@@ -2,6 +2,16 @@
 
 # React + Vite
 
+## Run Client
+
+```bash
+cd client
+#install first include node_modules
+npm install
+# run the server
+npm run dev # and makesure there is no error
+```
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
