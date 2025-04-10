@@ -10,6 +10,9 @@ import Projects from "./Components/pagesOfHome/Projects";
 import Tasks from "./Components/pagesOfHome/Tasks";
 import Chat from "./Components/pagesOfHome/Chat";
 import Taskboard from "./Components/pagesOfHome/Taskboard";
+import VerifyEmail from "./Components/verifyEmail";
+import ForgotPassword from "./Components/ForgetPassword";
+import ResetPassword from "./Components/ResetPassword";
 function App() {
   return (
     <>
@@ -17,6 +20,9 @@ function App() {
         <Route path="/" element={<SignIn />} />
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/VerifyEmail" element={<VerifyEmail />} />
+        <Route path="/ForgetPassword" element={<ForgotPassword />} />
+        <Route path="/ResetPassword" element={<ResetPassword />} />
         <Route path="*" element={<NotFound />} />
         {/* Home route with nested routes inside it */}
         <Route
@@ -28,6 +34,7 @@ function App() {
           }
         >
           <Route index element={<Dashboard />} />
+          <Route path="Dashboard" element={<Dashboard />} />
           <Route path="Projects" element={<Projects />} />
           <Route path="Tasks" element={<Tasks />} />
           <Route path="Chat" element={<Chat />} />

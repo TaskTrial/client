@@ -4,6 +4,25 @@
   height: 100vh;
   width: 100%;
 }
+a {
+  font-size: 20px;
+}
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.blur-content {
+  filter: blur(2px);
+  pointer-events: none;
+}
 .view {
   background-color: var(--secondColor);
   padding: 50px;
@@ -20,22 +39,27 @@
 }
 .view .image img {
   width: 100%;
-  max-width: 800px;
-  max-height: 500px;
+  max-width: 900px;
+  max-height: 600px;
 }
 .fields {
   padding: 30px;
+  padding-top: 10px;
   min-width: 40%;
   margin-block: auto;
 }
 .fields h1 {
   margin-bottom: 30px;
+  white-space: nowrap;
+}
+.fields h2 {
+  white-space: nowrap;
 }
 .fields p {
   font-size: 15px;
 }
 .fields div:first-child {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-size: 20px;
   color: #525252;
 }
@@ -52,6 +76,7 @@
   transition: background 0.3s;
   border-radius: 6px;
   margin-bottom: 20px;
+  color: #000;
 }
 .google-icon {
   font-size: 50px;
@@ -123,6 +148,9 @@ form .forgetPassword label {
   display: flex;
   gap: 15px;
 }
+form .submitForm input {
+  cursor: pointer;
+}
 .submitForm input {
   color: white;
   background-color: var(--thirdColor);
@@ -130,6 +158,12 @@ form .forgetPassword label {
 .fields div:last-child {
   text-align: center;
   color: var(--colorParagraph);
+}
+/* meduim */
+@media screen and (max-width: 996px) {
+  a {
+    white-space: nowrap;
+  }
 }
 /* phone */
 @media screen and (max-width: 767px) {

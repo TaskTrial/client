@@ -77,6 +77,10 @@ body {
   padding: 0px 5px;
   border-radius: 50%;
 }
+.toggle-btn:hover {
+  background-color: var(--thirdColor);
+  color: white;
+}
 .sidebar-hidden {
   display: none;
 }

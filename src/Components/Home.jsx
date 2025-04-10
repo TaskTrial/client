@@ -39,11 +39,19 @@ function Home() {
             <span>create new project</span>
           </div>
           <ul>
-            <li className={currentPath === "/Home" ? "active" : ""}>
+            <li
+              className={
+                (currentPath === "/Home") | "/Home/Dashboard" ? "active" : ""
+              }
+            >
               <Link to="/Home">
                 <MdApps
                   size={24}
-                  color={currentPath === "/Home" ? "orangered" : "white"}
+                  color={
+                    (currentPath === "/Home") | "/Home/Dashboard"
+                      ? "orangered"
+                      : "white"
+                  }
                 />
                 <span>Dashboard</span>
               </Link>
