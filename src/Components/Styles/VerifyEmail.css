@@ -64,7 +64,7 @@
 .button {
   width: 100%;
   padding: 0.75rem;
-  background-color: #4caf50;
+  background-color: var(--thirdColor);
   color: white;
   border: none;
   border-radius: 4px;
@@ -74,7 +74,7 @@
 }
 
 .button:hover {
-  background-color: #45a049;
+  background-color: #e65f2bbf;
 }
 
 .resend-otp {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./Styles/VerifyEmail.css";
-import { TailSpin } from "react-loader-spinner";
+import "../Styles/VerifyEmail.css";
+import LoadingOverlay from "../LoadingOverlay";
 function VerifyEmail() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function VerifyEmail() {
     e.preventDefault();
 
     if (!otp || otp.length !== 6) {
-      setMessage({ text: "Please enter a valid 6-digit OTP", type: "error" });
+      setMessage({ text: "Please Enter a valid 6-digit OTP", type: "error" });
       return;
     }
     setIsLoading(true);
@@ -37,8 +37,7 @@ function VerifyEmail() {
           type: "success",
         });
         localStorage.removeItem("VerifyEmail");
-        localStorage.setItem("auth", "true");
-        setTimeout(() => navigate("/Home"), 1500);
+        setTimeout(() => navigate("/SignIn"), 1500);
       } else {
         setMessage({
           text: data.message || "Invalid or expired OTP",
@@ -51,56 +50,41 @@ function VerifyEmail() {
       setIsLoading(false);
     }
   };
-  // reset otp
-  //     const handleResendOtp = async () => {
-  //     setIsLoading(true);
-  //     try {
-  //       const res = await fetch("http://localhost:3000/api/auth/resend-otp", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ email }),
-  //       });
+  const handleResendOtp = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/resendOTP", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
 
-  //       const data = await res.json();
+      const data = await res.json();
 
-  //       if (res.ok) {
-  //         setMessage({
-  //           text: data.message || "OTP resent successfully!",
-  //           type: "success",
-  //         });
-  //       } else {
-  //         setMessage({
-  //           text: data.message || "Failed to resend OTP",
-  //           type: "error",
-  //         });
-  //       }
-  //     } catch (err) {
-  //       setMessage({ text: err.message, type: "error" });
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+      if (res.ok) {
+        setMessage({
+          text: data.message || "OTP resent successfully!",
+          type: "success",
+        });
+      } else {
+        setMessage({
+          text: data.message || "Failed to resend OTP",
+          type: "error",
+        });
+      }
+    } catch (err) {
+      setMessage({ text: err.message, type: "error" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
-      {/* Loading Overlay */}
-      {isLoading && (
-        <div className="loading-overlay">
-          <TailSpin
-            height={80}
-            width={80}
-            color="#4fa94d"
-            ariaLabel="tail-spin-loading"
-            radius="1"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-          />
-          <p style={{ marginTop: "20px" }}>Processing your request...</p>
-        </div>
-      )}
+      {/* ${isLoading ? "Signblur-content" : ""} */}
+      <LoadingOverlay isLoading={isLoading} />
       <div className={`VerifyEmail ${isLoading ? "blur-content" : ""}`}>
         <div className="verify-card">
           <h2>Verify Your Email</h2>
@@ -127,12 +111,9 @@ function VerifyEmail() {
 
           <div className="resend-otp">
             <p>Did not receive the code?</p>
-            {/* <button
-                onClick={handleResendOtp}
-              className="resend-btn button"
-            >
+            <button onClick={handleResendOtp} className="resend-btn button">
               Resend OTP
-            </button> */}
+            </button>
             <button
               className="resend-btn button"
               onClick={() => navigate("/SignIn")}

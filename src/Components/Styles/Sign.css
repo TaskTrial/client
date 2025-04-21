@@ -1,13 +1,32 @@
-.signIn,
-.signup {
+.SignsignIn,
+.Signsignup {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
 }
 a {
-  font-size: 20px;
+  font-size: 1rem;
 }
-.loading-overlay {
+.Signpassword-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+input.SignShow {
+  padding-right: 40px;
+}
+
+.Signicon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #888;
+  font-size: 18px;
+  top: 15px;
+}
+
+.Signloading-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -19,51 +38,60 @@ a {
   align-items: center;
   z-index: 1000;
 }
-.blur-content {
+/* .Signblur-content {
   filter: blur(2px);
   pointer-events: none;
-}
-.view {
+} */
+.Signview {
   background-color: var(--secondColor);
   padding: 50px;
   overflow-y: hidden;
 }
-.view .content {
+.Signview .Signcontent {
   text-align: center;
   font-size: 30px;
   line-height: 1.5;
 }
-.view .image {
+.Signview .Signimage {
   width: 100%;
   overflow: hidden;
 }
-.view .image img {
+.Signview .Signimage img {
   width: 100%;
   max-width: 900px;
   max-height: 600px;
 }
-.fields {
+.Signfields {
   padding: 30px;
   padding-top: 10px;
   min-width: 40%;
   margin-block: auto;
 }
-.fields h1 {
+.Signfields h1 {
   margin-bottom: 30px;
   white-space: nowrap;
 }
-.fields h2 {
+.Signfields h2 {
   white-space: nowrap;
 }
-.fields p {
+.Signfields p {
   font-size: 15px;
 }
-.fields div:first-child {
+.Signfields div:first-child {
   margin-bottom: 20px;
   font-size: 20px;
   color: #525252;
 }
-.google-btn {
+.Sign-checed:hover {
+  cursor: pointer;
+}
+.Sign-checed input:hover {
+  cursor: pointer;
+}
+.Sign-checed label:hover {
+  cursor: pointer;
+}
+.Signgoogle-btn {
   width: 100%;
   border: 1px solid #ccc;
   padding: 10px;
@@ -78,24 +106,24 @@ a {
   margin-bottom: 20px;
   color: #000;
 }
-.google-icon {
+/* .Signgoogle-icon {
   font-size: 50px;
   fill: #4285f4;
 }
 
-.google-btn:hover .google-icon {
+.Signgoogle-btn:hover .Signgoogle-icon {
   fill: #a9254f;
-}
+} */
 
-.google-btn:hover {
+.Signgoogle-btn:hover {
   background: #f2f2f2;
 }
 
-.google-icon {
+.Signgoogle-icon {
   width: 18px;
   height: 18px;
 }
-.divider {
+.Signdivider {
   text-align: center;
   color: var(--colorParagraph);
   margin: 20px 0;
@@ -108,9 +136,9 @@ form input {
   display: block;
   margin-bottom: 15px;
   padding: var(--section-padding);
-  background-color: #d1cdcd;
+  background-color: #fff;
   border-radius: 5px;
-  border: none;
+  border: 1px solid #aaa;
   width: 100%;
 }
 form input::placeholder {
@@ -121,16 +149,16 @@ form input:focus {
   border: 1px solid var(--thirdColor);
 }
 
-.forgetPassword {
+.SignforgetPassword {
   display: flex;
   justify-content: space-between;
 }
-.forgetPassword div {
+.SignforgetPassword div {
   margin-bottom: 0 !important;
   display: flex;
   gap: 5px;
 }
-.forgetPassword input {
+.SignforgetPassword input {
   display: block;
   width: fit-content;
   color: var(--thirdColor);
@@ -138,24 +166,43 @@ form input:focus {
 /* form input:checked {
   accent-color: var(--thirdColor); 
 } */
-form .forgetPassword input[type="checkbox"],
-form .forgetPassword label {
+form .SignforgetPassword input[type="checkbox"],
+form .SignforgetPassword label {
   accent-color: var(--thirdColor);
   margin-bottom: 0;
   color: var(--thirdColor);
+  font-size: 1rem;
 }
-.submitForm {
+.SignsubmitForm {
   display: flex;
   gap: 15px;
 }
-form .submitForm input {
+.SignfirstLast {
+  margin-block: 15px;
+  display: flex;
+  gap: 15px;
+}
+.SignfirstLast > div {
+  width: 100%;
+  font-size: 16px !important;
+  margin-bottom: 0 !important;
+}
+.SignfirstLast > div:last-of-type label {
+  display: block;
+  text-align: left !important;
+}
+
+.SignfirstLast > div input {
+  margin-bottom: 0;
+}
+form .SignsubmitForm input {
   cursor: pointer;
 }
-.submitForm input {
+.SignsubmitForm input {
   color: white;
   background-color: var(--thirdColor);
 }
-.fields div:last-child {
+.Signfields div:last-child {
   text-align: center;
   color: var(--colorParagraph);
 }
@@ -167,15 +214,15 @@ form .submitForm input {
 }
 /* phone */
 @media screen and (max-width: 767px) {
-  .view {
+  .Signview {
     display: none;
   }
-  .fields {
+  .Signfields {
     width: 100%;
     margin: 0;
   }
-  .fields h1,
-  .fields h2 {
+  .Signfields h1,
+  .Signfields h2 {
     width: 100%;
     font-size: 25px;
     white-space: nowrap;

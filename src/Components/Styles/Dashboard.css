@@ -1,0 +1,212 @@
+.Dashboard {
+  background-color: var(--secondColor);
+  overflow: auto;
+  color: #000;
+  overflow-x: hidden;
+  word-break: break-all;
+  white-space: wrap;
+}
+/* dashboard header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.dashboard-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.dashboard-icon,
+.dashboard-profile-icon {
+  font-size: 40px;
+  cursor: pointer;
+}
+/* dashboard overview */
+.dashboard-overview-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+  margin: 1rem 0;
+  padding: 0 20px;
+}
+
+.dashboard-card {
+  background-color: #f9eee6;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-icon {
+  font-size: 20px;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.dashboard-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.dashboard-status {
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+.dashboard-status-up {
+  color: green;
+}
+
+.dashboard-status-down {
+  color: red;
+}
+/* dashboard total project */
+/* dashboard today task */
+/* ======================
+   Layout Container
+====================== */
+
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+/* ======================
+     Box Styles (Projects / Tasks)
+  ====================== */
+
+.dashboard-projects-wrapper,
+.dashboard-tasks-wrapper {
+  background-color: #f9eee6;
+  border-radius: 16px;
+  padding: 20px;
+  flex: 1 1 300px;
+  max-height: 480px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .dashboard-projects-wrapper,
+  .dashboard-tasks-wrapper {
+    padding: 10px;
+    max-height: 300px;
+  }
+}
+
+/* ======================
+     Row Styles
+  ====================== */
+
+.project-row,
+.task-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.project-row span:nth-of-type(1) {
+  min-width: 160px;
+}
+/* ======================
+     Status Labels
+  ====================== */
+
+.status,
+.task-status {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.completed {
+  background-color: #d2f4dd;
+  color: #2e7d32;
+}
+
+.delayed {
+  background-color: #fbe4a1;
+  color: #b26a00;
+}
+
+.at-risk {
+  background-color: #f8c9c9;
+  color: #c62828;
+}
+
+.approved {
+  background-color: #d2f4dd;
+  color: #2e7d32;
+}
+
+.review {
+  background-color: #f8c9c9;
+  color: #c62828;
+}
+
+.ongoing {
+  background-color: #ffe0c7;
+  color: #e85d04;
+}
+
+/* ======================
+     Progress Circles
+  ====================== */
+
+.progress-circle {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+}
+
+.green {
+  border: 4px solid #2e7d32;
+}
+
+.yellow {
+  border: 4px solid #fbc02d;
+}
+
+.red {
+  border: 4px solid #d32f2f;
+}
+
+/* ======================
+     Scrollbar Styling (Optional)
+  ====================== */
+
+.dashboard-projects-wrapper::-webkit-scrollbar,
+.dashboard-tasks-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dashboard-projects-wrapper::-webkit-scrollbar-thumb,
+.dashboard-tasks-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}

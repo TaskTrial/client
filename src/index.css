@@ -12,7 +12,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: "Open Sans", serif;
+  font-family: "Nunito Sans", sans-serif !important;
 }
 :root {
   --mainColor: #ebdfd7;

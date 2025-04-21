@@ -3,17 +3,18 @@
   grid-template-columns: auto 1fr;
   width: 100%;
 }
-.toggle-home {
+.Hometoggle-home {
   grid-template-columns: 1fr;
 }
 
-.main-links {
+.Homemain-links {
+  min-width: 255px;
   background-color: #342e2e;
-  height: 100vh;
+  height: auto;
   overflow-y: auto;
   padding: 10px;
 }
-.main-links h1 {
+.Homemain-links h1 {
   width: 100%;
   color: #525252;
   font-size: 32px;
@@ -22,7 +23,7 @@
   border-radius: 15px;
   padding: 5px 50px;
 }
-.main-links .create-project {
+.Homemain-links .Homecreate-project {
   width: fit-content;
   background-color: #fff;
   padding: 5px;
@@ -30,7 +31,7 @@
   margin-left: 25px;
   margin-bottom: 15px;
 }
-.main-links .create-project span:first-child {
+.Homemain-links .Homecreate-project span:first-child {
   color: #fff;
   background-color: var(--thirdColor);
   border-radius: 50%;
@@ -38,35 +39,35 @@
   font-size: 20px;
   margin-right: 5px;
 }
-.main-links ul {
+.Homemain-links ul {
   padding: 25px;
 }
-.main-links ul li {
+.Homemain-links ul li {
   margin-bottom: 15px;
 }
-.main-links ul li.active {
+.Homemain-links ul li.Homeactive {
   background-color: #fff;
   border-radius: 10px;
   width: fit-content;
   padding: 5px;
 }
-.main-links ul li.active span {
+.Homemain-links ul li.Homeactive span {
   color: var(--thirdColor);
 }
-.main-links ul li a :first-child {
+.Homemain-links ul li a :first-child {
   margin-right: 10px;
 }
-.main-links ul li a span {
+.Homemain-links ul li a span {
   color: #fff;
 }
-.main-links ul li a {
+.Homemain-links ul li a {
   display: flex;
   align-items: center;
 }
 body {
   position: relative;
 }
-.toggle-btn {
+.Hometoggle-btn {
   position: absolute;
   top: 116px;
   background: white;
@@ -77,24 +78,32 @@ body {
   padding: 0px 5px;
   border-radius: 50%;
 }
-.toggle-btn:hover {
+.Hometoggle-btn:hover {
   background-color: var(--thirdColor);
   color: white;
 }
-.sidebar-hidden {
+.Homesidebar-hidden {
   display: none;
 }
-.btn-open {
-  left: 230px;
+.Homebtn-open {
+  left: 240px;
 }
-.btn-closed {
+.Homebtn-closed {
   left: 0px;
+}
+.Homecontent {
+  overflow-x: hidden;
 }
 @media screen and (max-width: 767px) {
   .Home {
     grid-template-columns: 1fr;
   }
-  .main-links {
+  .Homecontent {
+    overflow: hidden;
+    margin-bottom: 74px;
+    height: fit-content;
+  }
+  .Homemain-links {
     background-color: black;
     height: fit-content;
     overflow-y: hidden;
@@ -102,24 +111,31 @@ body {
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 5px;
+    min-width: fit-content;
+    z-index: 5;
   }
-  .main-links h1,
-  .toggle-btn {
+  .Homemain-links h1,
+  .Hometoggle-btn {
     display: none;
   }
-  .main-links ul li span {
+  .Homemain-links ul li span {
     display: none;
   }
-  .main-links ul {
+  .Homemain-links ul {
     display: flex;
+    min-width: 100%;
+    max-width: fit-content;
+    align-items: center;
     justify-content: space-between;
     padding: 10px;
   }
-  .main-links ul li {
-    margin-bottom: 0;
+  .Homemain-links ul li {
+    margin: 0 !important;
   }
-  .main-links .create-project {
+  .Homemain-links ul li a {
+    margin: 0 !important;
+  }
+  .Homemain-links .Homecreate-project {
     position: fixed;
     right: 30px;
     bottom: 90px;

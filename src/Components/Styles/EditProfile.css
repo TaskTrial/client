@@ -1,0 +1,112 @@
+.editProfile-container {
+  background-color: #eee0d0;
+  padding: 20px;
+  min-height: 100vh;
+  font-family: sans-serif;
+}
+
+.editProfile-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.EditProfile-top {
+  color: #444;
+  margin-inline: auto;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.editProfile-title {
+  font-size: 18px;
+}
+
+.editProfile-avatar-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.editProfile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.editProfile-avatar-icon {
+  font-size: 80px;
+  margin-bottom: 10px;
+}
+
+.editProfile-avatar-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.editProfile-icon-button {
+  border: none;
+  padding: 16px 16px 12px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+}
+
+.editProfile-icon-button.upload {
+  background-color: #f15b2a;
+}
+
+.editProfile-icon-button.delete {
+  background-color: #e53935;
+}
+
+.editProfile-icon-button.confirm {
+  background-color: #4caf50;
+}
+
+.editProfile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.editProfile-form label {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.editProfile-form input,
+.editProfile-form textarea {
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 4px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.editProfile-form textarea {
+  resize: none;
+  height: 80px;
+}
+
+.editProfile-charcount {
+  text-align: right;
+  font-size: 12px;
+  color: #555;
+  margin-top: 4px;
+}
+
+.editProfile-save-button {
+  background-color: #f15b2a;
+  border: none;
+  border-radius: 14px;
+  padding: 14px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
