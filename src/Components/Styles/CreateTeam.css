@@ -1,0 +1,182 @@
+.create-team-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background-color: var(--secondColor);
+  min-height: 100vh;
+  animation: fadeIn 0.5s ease-in-out;
+}
+@media screen and (max-width: 767px) {
+  .create-team-container {
+    min-height: calc(100vh - 74px);
+  }
+}
+.create-team-form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+}
+
+.create-team-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  color: #007bff;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.create-team-header:hover {
+  color: #0056b3;
+}
+
+.back-icon {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.team-icon {
+  margin-right: 0.6rem;
+  color: #007bff;
+}
+
+.create-team-form h2 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.create-team-form label {
+  display: block;
+  margin-bottom: 1.2rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.create-team-form input,
+.create-team-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-top: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.create-team-form input:focus,
+.create-team-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.toggle-members-button {
+  width: 100%;
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s;
+}
+
+.toggle-members-button:hover {
+  background-color: #0056b3;
+}
+
+.add-team-members {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  animation: slideDown 0.3s ease;
+}
+
+.add-team-members h4 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.selected-user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+  gap: 15px;
+}
+.create-team-form input[type="checkbox"] {
+  width: fit-content;
+  align-self: center;
+  margin: 0;
+}
+
+.selected-user span {
+  color: #333;
+}
+
+.role-select {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  background-color: #fff;
+  transition: border-color 0.3s;
+}
+
+.role-select:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.create-team-form button[type="submit"] {
+  width: 100%;
+  background-color: var(--thirdColor);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-team-form button[type="submit"]:hover {
+  background-color: var(--thirdColorBold);
+}
+
+.create-team-form button[type="submit"]:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

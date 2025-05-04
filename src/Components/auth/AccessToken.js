@@ -1,13 +1,8 @@
 //AccessToken.js
 
 import { login } from "../store/userSlice";
-const AccessToken = async ({
-  refreshToken,
-  userData,
-  dispatch,
-  navigate,
-  setToast,
-}) => {
+const AccessToken = async ({ userData, dispatch, navigate, setToast }) => {
+  const refreshToken = localStorage.getItem("refreshToken") || "";
   try {
     const response = await fetch(
       "http://localhost:3000/api/auth/refreshAccessToken",
@@ -21,9 +16,9 @@ const AccessToken = async ({
     );
     const refreshData = await response.json();
     if (response.ok) {
+      console.log("12345");
       localStorage.setItem("accessToken", refreshData.accessToken);
       localStorage.setItem("auth", "true");
-      console.log(`1-${refreshData.message}`);
       // setToast({
       //   message: refreshData.message || "accessToken get successfully",
       //   type: "success",
@@ -43,7 +38,6 @@ const AccessToken = async ({
     } else {
       // refreshToken expired 403
       // localStorage.clear(); after fix refreshtoken
-      console.log(`2-${refreshData.message}`);
       setToast({
         message:
           refreshData.mssage || "refreshToken is expired please login again",
@@ -53,8 +47,9 @@ const AccessToken = async ({
       return null;
     }
   } catch (error) {
+    console.log("123456");
+
     setToast({ message: error.message, type: "error" });
-    console.log(`3-${error.message}`);
     return null;
   }
 };

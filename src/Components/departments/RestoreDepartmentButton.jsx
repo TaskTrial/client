@@ -1,32 +1,35 @@
 /* eslint-disable react/prop-types */
 import { MdRestore } from "react-icons/md";
-import ConfirmModal from "../../ConfirmModal";
+import ConfirmModal from "../ConfirmModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AccessToken from "../../auth/AccessToken";
+import AccessToken from "../auth/AccessToken";
 import { useSelector, useDispatch } from "react-redux";
 
-const RestoreUserButton = ({ setToast, setIsLoading }) => {
+const RestoreDepartmentButton = ({ setToast, setIsLoading }) => {
   const [showConfirm, setShowConfirm] = useState(false);
-  const [targetUserId, setTargetUserId] = useState("");
+  const [targetDeptId, setTargetDeptId] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-
-  const handleRestoreUser = async (retried = false) => {
-    if (!targetUserId.trim()) {
-      setToast({ message: "Please enter a user ID.", type: "error" });
+  const userData = useSelector((state) => state.user);
+  const orgId = userData.organization?.id;
+  const deptId = targetDeptId.trim();
+  const handleRestoreDepartment = async (retried = false) => {
+    if (!deptId) {
+      setToast({ message: "Please enter a department ID.", type: "error" });
       return;
     }
 
+    const accessToken = localStorage.getItem("accessToken");
     setIsLoading(true);
+
     try {
       const response = await fetch(
-        `http://localhost:3000/api/users/${targetUserId.trim()}/restore`,
+        `http://localhost:3000/api/organizations/${orgId}/departments/${deptId}/restore`,
         {
           method: "PATCH",
           headers: {
-            Authorization: `Bearer ${user.accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );
@@ -34,21 +37,23 @@ const RestoreUserButton = ({ setToast, setIsLoading }) => {
       const data = await response.json();
 
       if (response.ok) {
-        setToast({ message: data.message, type: "success" });
+        setToast({
+          message: data.message || "Department restored",
+          type: "success",
+        });
         setShowConfirm(false);
-        setTargetUserId("");
+        setTargetDeptId("");
       } else if (data.message === "Token expired" && !retried) {
         const newAccessToken = await AccessToken({
-          refreshToken: user.refreshToken,
-          user,
+          userData,
           dispatch,
           navigate,
           setToast,
         });
 
         if (newAccessToken) {
-          user.accessToken = newAccessToken;
-          await handleRestoreUser(true);
+          userData.accessToken = newAccessToken;
+          await handleRestoreDepartment(true);
         } else {
           setToast({ message: "Could not refresh session.", type: "error" });
         }
@@ -62,8 +67,7 @@ const RestoreUserButton = ({ setToast, setIsLoading }) => {
     }
   };
 
-  // إظهار الزر فقط إذا كان المستخدم Admin
-  //   if (user.role !== "admin") return null;
+  //   if (userData.role !== "admin") return null;
 
   return (
     <>
@@ -71,35 +75,39 @@ const RestoreUserButton = ({ setToast, setIsLoading }) => {
         <ConfirmModal
           message={
             <>
-              <p>Are you sure you want to restore this user?</p>
+              <p>Are you sure you want to restore this department?</p>
               <input
                 type="text"
-                placeholder="Enter User ID"
-                value={targetUserId}
-                onChange={(e) => setTargetUserId(e.target.value)}
+                placeholder="Enter Department ID"
+                value={targetDeptId}
+                onChange={(e) => setTargetDeptId(e.target.value)}
                 className="confirm-input"
               />
             </>
           }
-          onConfirm={handleRestoreUser}
+          onConfirm={handleRestoreDepartment}
           onCancel={() => {
             setShowConfirm(false);
-            setTargetUserId("");
+            setTargetDeptId("");
           }}
         />
       )}
 
       <div
+        style={{ backgroundColor: "#28a745" }}
         className="profile-action restoreaction"
         onClick={() => setShowConfirm(true)}
       >
-        <button className="profile-button">
+        <button
+          className="profile-button"
+          style={{ backgroundColor: "#28a745", width: "100%", color: "#fff" }}
+        >
           <MdRestore size={18} />
-          Restore User
+          Restore Department
         </button>
       </div>
     </>
   );
 };
 
-export default RestoreUserButton;
+export default RestoreDepartmentButton;

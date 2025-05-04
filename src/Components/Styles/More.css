@@ -1,0 +1,36 @@
+.More {
+  padding: 20px;
+  background-color: #eee0d0;
+  min-height: 100vh;
+  font-family: sans-serif;
+}
+@media screen and (max-width: 767px) {
+  .More {
+    min-height: calc(100vh - 74px);
+  }
+}
+.More-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 60px 0 20px;
+}
+.More-field {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  padding: 12px 16px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.More-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background-color: #fff;
+  font-size: 16px;
+  text-align: left;
+}

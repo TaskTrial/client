@@ -5,13 +5,21 @@ import { MdWorkOutline } from "react-icons/md";
 import { MdChatBubbleOutline } from "react-icons/md";
 import { MdChecklist } from "react-icons/md";
 import { MdMoreHoriz } from "react-icons/md";
+import { FaUniversity } from "react-icons/fa";
 ///////////hooks////////=>:
 import { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getUser } from "./store/userSlice";
 import LoadingOverlay from "./LoadingOverlay";
-import AccessToken from "./auth/AccessToken";
+import { fetchUser } from "./Auser/fetchUser";
+import { fetchOrganization } from "./organization/fetchOrganization";
+import { getOrganizationStatus } from "./organization/getOrganizationStatus";
+////////////////
+// import { MdCategory } from "react-icons/md"; // Material Design
+import { FaSitemap } from "react-icons/fa"; // FontAwesome
+// import { AiFillFolderOpen } from "react-icons/ai"; // Ant Design Icons
+// import { HiViewGrid } from "react-icons/hi"; // Heroicons
+
 // import LoadingOverlay from "./LoadingOverlay";  loader
 // const [isLoading, setIsLoading] = useState(false);
 {
@@ -40,7 +48,6 @@ function Home() {
   const currentPath = location.pathname;
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
   // const storedStatus = localStorage.getItem("isSidebarOpen") || "true";
   // const [isSidebarOpen, setIsSidebarOpen] = useState(storedStatus);
   // useEffect(() => {
@@ -49,86 +56,6 @@ function Home() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-  const fetchUser = async (retried = false) => {
-    if (!userData?.id || !userData?.accessToken) {
-      setToast({
-        message: "User not found",
-        type: "error",
-      });
-      setTimeout(() => {
-        navigate("/SignIn");
-      }, 1500);
-      return;
-    }
-    setIsLoading(true);
-    // if (!userId || !accessToken) {
-    //   setToast({
-    //     message: "user not found",
-    //     type: "error",
-    //   });
-    //   setIsLoading(false);
-    //   return;
-    // }
-    const userId = userData.id;
-    const accessToken = userData.accessToken;
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/users/${userId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      const data = await response.json();
-      if (response.status == 200) {
-        localStorage.setItem("getUser", JSON.stringify(data.user));
-        dispatch(
-          getUser({
-            user: {
-              ...data.user,
-              id: userData.id,
-              email: userData.email,
-              role: userData.role,
-            },
-          })
-        );
-        setToast({
-          message: data.message || "Data get successfully",
-          type: "success",
-        });
-      } else if (data.message === "Token expired" && !retried) {
-        const newAccessToken = await AccessToken({
-          refreshToken: userData.refreshToken,
-          userData,
-          dispatch,
-          navigate,
-          setToast,
-        });
-        if (newAccessToken) {
-          userData.accessToken = newAccessToken;
-          await fetchUser(true);
-        } else {
-          setToast({
-            message: "Could not refresh session.",
-            type: "error",
-          });
-        }
-      } else {
-        setToast({ message: data.message, type: "error" });
-        console.log("from Home ");
-      }
-    } catch (error) {
-      // console.error('Error fetching user:', error);
-      setToast({ message: error.message, type: "error" });
-      console.log(`1-3-${error.message}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   // const hasFetched = useRef(false);
   // useEffect(() => {
   //   if (!userId) {
@@ -144,17 +71,58 @@ function Home() {
   //     fetchUser();
   //   }
   // }, [userId, accessToken, navigate]);
-
   const hasFetched = useRef(false);
   useEffect(() => {
-    console.log("userData", userData);
     if (!userData || !userData.id || !userData.accessToken) return;
-    console.log("Fetching user...");
+
     if (!hasFetched.current) {
       hasFetched.current = true;
-      fetchUser();
+
+      const fetchData = async () => {
+        try {
+          await fetchUser({
+            userData,
+            dispatch,
+            navigate,
+            setToast,
+            setIsLoading,
+          });
+          // await fetchUser();
+          // const orgId = JSON.parse(localStorage.getItem("getUser"))?.organization?.id;
+          const orgId = await getOrganizationStatus({
+            userData,
+            dispatch,
+            navigate,
+            setToast,
+            setIsLoading,
+          });
+          if (userData && userData.accessToken) {
+            console.log(orgId);
+            if (orgId) {
+              await fetchOrganization({
+                userData,
+                orgId,
+                setToast,
+                setIsLoading,
+                dispatch,
+                navigate,
+              });
+            }
+            if (!orgId) {
+              navigate("/Home/CreateOrganization");
+              return;
+            }
+          }
+
+          // await fetchThirdThing();
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchData();
     }
-  }, [userData]);
+  }, [userData, dispatch, navigate]);
 
   return (
     <>
@@ -240,16 +208,109 @@ function Home() {
               </Link>
             </li>
             <li
-              className={currentPath === "/Home/Taskboard" ? "Homeactive" : ""}
+              className={`showMore ${
+                currentPath === "/Home/More" ? "Homeactive" : ""
+              }`}
             >
-              <Link to="/Home/Taskboard">
+              <Link to="/Home/More">
                 <MdMoreHoriz
                   size={24}
+                  color={currentPath === "/Home/More" ? "orangered" : "white"}
+                />
+                <span>More</span>
+              </Link>
+            </li>
+            {/* <li
+              className={`hiddenforMore ${
+                currentPath === "/Home/CreateOrganization" ? "Homeactive" : ""
+              }`}
+            >
+              <Link to="/Home/CreateOrganization">
+                <FaUniversity
+                  size={24}
                   color={
-                    currentPath === "/Home/Taskboard" ? "orangered" : "white"
+                    currentPath === "/Home/CreateOrganization"
+                      ? "orangered"
+                      : "white"
                   }
                 />
-                <span>Taskboard</span>
+                <span>Create an Organization</span>
+              </Link>
+            </li> */}
+            <li
+              className={`hiddenforMore ${
+                currentPath === "/Home/Organization" ? "Homeactive" : ""
+              }`}
+            >
+              {/* navigate("/Home/ProfileDetails", { state: { from: "/Home" } }); */}
+              <Link to="/Home/Organization" state={{ from: "/Home" }}>
+                <FaUniversity
+                  size={24}
+                  color={
+                    currentPath === "/Home/Organization" ? "orangered" : "white"
+                  }
+                />
+                <span>My Organization</span>
+              </Link>
+            </li>
+            <li
+              className={`hiddenforMore ${
+                currentPath === "/Home/Departments" ? "Homeactive" : ""
+              }`}
+            >
+              <Link to="/Home/Departments" state={{ from: "/Home" }}>
+                <FaSitemap
+                  size={24}
+                  color={
+                    currentPath === "/Home/Departments" ? "orangered" : "white"
+                  }
+                />
+                <span>My Departments</span>
+              </Link>
+            </li>
+            <li
+              className={`hiddenforMore ${
+                currentPath === "/Home/CreateDepartment" ? "Homeactive" : ""
+              }`}
+            >
+              <Link to="/Home/CreateDepartment" state={{ from: "/Home" }}>
+                <FaSitemap
+                  size={24}
+                  color={
+                    currentPath === "/Home/CreateDepartment"
+                      ? "orangered"
+                      : "white"
+                  }
+                />
+                <span>Create a Department</span>
+              </Link>
+            </li>
+            <li
+              className={`hiddenforMore ${
+                currentPath === "/Home/CreateTeam" ? "Homeactive" : ""
+              }`}
+            >
+              <Link to="/Home/CreateTeam" state={{ from: "/Home" }}>
+                <FaSitemap
+                  size={24}
+                  color={
+                    currentPath === "/Home/CreateTeam" ? "orangered" : "white"
+                  }
+                />
+                <span>Create a Team</span>
+              </Link>
+            </li>
+            <li
+              className={`hiddenforMore ${
+                currentPath === "/Home/Teams" ? "Homeactive" : ""
+              }`}
+            >
+              <Link to="/Home/Teams" state={{ from: "/Home" }}>
+                <FaSitemap
+                  size={24}
+                  color={currentPath === "/Home/Teams" ? "orangered" : "white"}
+                />
+                <span>My Teams</span>
               </Link>
             </li>
           </ul>

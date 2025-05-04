@@ -203,7 +203,7 @@ function SignUp() {
                 />
               </div>
             </div>
-            <label htmlFor="username">Username:</label> <br />
+            <label htmlFor="username">Username:</label>
             <input
               type="text"
               name="userName"
@@ -213,7 +213,7 @@ function SignUp() {
               value={formData.userName}
               onChange={handleChange}
             />
-            <label htmlFor="email"> Email:</label> <br />
+            <label htmlFor="email"> Email:</label>
             <input
               type="email"
               name="email"
@@ -223,7 +223,7 @@ function SignUp() {
               value={formData.email}
               onChange={handleChange}
             />
-            <label htmlFor="password">Password:</label> <br />
+            <label htmlFor="password">Password:</label>
             <div className="Signpassword-wrapper">
               <input
                 type={showPassword ? "text" : "password"}
@@ -242,7 +242,7 @@ function SignUp() {
                 {showPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
             </div>
-            <label htmlFor="confirm">Confirm Password:</label> <br />
+            <label htmlFor="confirm">Confirm Password:</label>
             <div className="Signpassword-wrapper">
               <input
                 type={showPassword ? "text" : "password"}

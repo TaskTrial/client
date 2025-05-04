@@ -6,7 +6,7 @@ const ConfirmModal = ({ message, onConfirm, onCancel }) => {
   return (
     <div className="confirm-modal-overlay">
       <div className="confirm-modal">
-        <p className="confirm-modal-message">{message}</p>
+        <div className="confirm-modal-message">{message}</div>
         <div className="confirm-modal-buttons">
           <button className="confirm-modal-btn yes" onClick={onConfirm}>
             YES

@@ -9,12 +9,24 @@ import Dashboard from "./Components/pagesOfHome/Dashboard";
 import Projects from "./Components/pagesOfHome/Projects";
 import Tasks from "./Components/pagesOfHome/Tasks";
 import Chat from "./Components/pagesOfHome/Chat";
-import Taskboard from "./Components/pagesOfHome/Taskboard";
+import More from "./Components/pagesOfHome/More";
 import VerifyEmail from "./Components/auth/VerifyEmail";
 import ForgotPassword from "./Components/auth/ForgetPassword";
 import ResetPassword from "./Components/auth/ResetPassword";
-import Profile from "./Components/pagesOfHome/componentsofDashboard/Profile";
-import EditProfile from "./Components/pagesOfHome/componentsofDashboard/EditProfile";
+import Profile from "./Components/Auser/Profile";
+import EditProfile from "./Components/Auser/EditProfile";
+import CreateOrganization from "./Components/organization/CreateOrganization";
+import Organization from "./Components/organization/Organization";
+import EditOrganization from "./Components/organization/EditOrganization";
+import DepartmentsList from "./Components/departments/Departments";
+import CreateDepartment from "./Components/departments/CreateDepartment";
+import DepartmentDetails from "./Components/departments/DepartmentDetails";
+import EditDepartment from "./Components/departments/EditDepartment";
+import CreateTeam from "./Components/teams/CreateTeam";
+import Teams from "./Components/teams/Teams";
+import TeamDetails from "./Components/teams/TeamDetails";
+import EditTeam from "./Components/teams/EditTeam";
+/////////////////////////////////////////
 function App() {
   return (
     <>
@@ -42,7 +54,21 @@ function App() {
           <Route path="Projects" element={<Projects />} />
           <Route path="Tasks" element={<Tasks />} />
           <Route path="Chat" element={<Chat />} />
-          <Route path="Taskboard" element={<Taskboard />} />
+          <Route path="CreateOrganization" element={<CreateOrganization />} />
+          <Route path="Organization" element={<Organization />} />
+          <Route path="EditOrganization" element={<EditOrganization />} />
+          <Route path="Departments" element={<DepartmentsList />} />
+          <Route path="CreateDepartment" element={<CreateDepartment />} />
+          <Route path="Departments/:id" element={<DepartmentDetails />} />
+          <Route
+            path="Departments/:id/EditDepartment"
+            element={<EditDepartment />}
+          />
+          <Route path="CreateTeam" element={<CreateTeam />} />
+          <Route path="Teams" element={<Teams />} />
+          <Route path="Teams/:id" element={<TeamDetails />} />
+          <Route path="Teams/:id/EditTeam" element={<EditTeam />} />
+          <Route path="More" element={<More />} />
         </Route>
       </Routes>
     </>

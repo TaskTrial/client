@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { MdEdit } from "react-icons/md";
-import ConfirmModal from "../../ConfirmModal";
+import ConfirmModal from "../ConfirmModal";
 import { useSelector } from "react-redux";
-import AccessToken from "../../auth/AccessToken";
+import AccessToken from "../auth/AccessToken";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -13,24 +13,30 @@ const ResetPasswordButton = ({ setToast, setIsLoading }) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const user = useSelector((state) => state.user);
+  const userData = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const userId = userData.id;
+  const accessToken = localStorage.getItem("accessToken");
   const handleResetPassword = async (retried = false) => {
     setIsLoading(true);
+    if (oldPassword.length < 8 || newPassword.length < 8) {
+      setToast({ message: "password does not match", type: "error" });
+      setIsLoading(false);
+      return;
+    }
     const payload = {
       oldPassword: oldPassword.toLowerCase().trim(),
       newPassword: newPassword.toLowerCase().trim(),
     };
     try {
       const response = await fetch(
-        `http://localhost:3000/api/users/update-password/${user.userId}`,
+        `http://localhost:3000/api/users/update-password/${userId}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${user.accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify(payload),
         }
@@ -44,14 +50,13 @@ const ResetPasswordButton = ({ setToast, setIsLoading }) => {
         setNewPassword("");
       } else if (data.message === "Token expired" && !retried) {
         const newAccessToken = await AccessToken({
-          refreshToken: user.refreshToken,
-          user,
+          userData,
           dispatch,
           navigate,
           setToast,
         });
         if (newAccessToken) {
-          user.accessToken = newAccessToken;
+          userData.accessToken = newAccessToken;
           await handleResetPassword(true);
         }
       } else {

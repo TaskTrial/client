@@ -1,0 +1,57 @@
+.create-organization-container {
+  padding: 20px;
+  min-height: 100vh;
+  background-color: var(--secondColor);
+}
+@media screen and (max-width: 767px) {
+  .create-organization-container {
+    min-height: calc(100vh - 74px);
+  }
+}
+.create-organization-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.create-organization-title {
+  margin-left: 10px;
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+}
+
+.create-organization-form {
+  margin-top: 20px;
+  color: #444;
+}
+
+.create-organization-form label {
+  display: block;
+  margin: 10px 0;
+}
+
+.create-organization-form input,
+.create-organization-form select {
+  width: 100%;
+  padding: 20px;
+  margin-top: 5px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.create-organization-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.create-organization-button:hover {
+  background-color: #e64a19;
+}

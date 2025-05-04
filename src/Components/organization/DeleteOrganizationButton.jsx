@@ -1,26 +1,30 @@
 /* eslint-disable react/prop-types */
 import { FaTrash } from "react-icons/fa";
-import ConfirmModal from "../../ConfirmModal";
+import ConfirmModal from "../ConfirmModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import AccessToken from "../../auth/AccessToken";
+import AccessToken from "../auth/AccessToken";
 import { useSelector } from "react-redux";
-import { logout } from "../../store/userSlice";
-const DeleteAccountButton = ({ setToast, setIsLoading }) => {
+import { clearOrganization } from "../store/organizationSlice";
+const DeleteOrganizationButton = ({ setToast, setIsLoading }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const userData = useSelector((state) => state.user);
+  // const org = useSelector((state) => state.organization);
+  const orgId = userData.organization?.id;
+
   const handleDeleteAccount = async (retried = false) => {
     setIsLoading(true);
+    const accessToken = localStorage.getItem("accessToken");
     try {
       const response = await fetch(
-        `http://localhost:3000/api/users/delete/${user.userId}`,
+        `http://localhost:3000/api/organization/${orgId}`,
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${user.accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );
@@ -30,20 +34,19 @@ const DeleteAccountButton = ({ setToast, setIsLoading }) => {
       if (response.ok) {
         setToast({ message: data.message, type: "success" });
 
-        // تسجيل الخروج
-        localStorage.clear();
-        dispatch(logout());
-        navigate("/login");
+        dispatch(clearOrganization());
+        setTimeout(() => {
+          navigate("/SignIn");
+        }, 1500);
       } else if (data.message === "Token expired" && !retried) {
         const newAccessToken = await AccessToken({
-          refreshToken: user.refreshToken,
-          user,
+          userData,
           dispatch,
           navigate,
           setToast,
         });
         if (newAccessToken) {
-          user.accessToken = newAccessToken;
+          userData.accessToken = newAccessToken;
           await handleDeleteAccount(true);
         } else {
           setToast({
@@ -76,11 +79,11 @@ const DeleteAccountButton = ({ setToast, setIsLoading }) => {
       >
         <button className="profile-button">
           <FaTrash size={18} />
-          Delete your account
+          Delete your Organization
         </button>
       </div>
     </>
   );
 };
 
-export default DeleteAccountButton;
+export default DeleteOrganizationButton;

@@ -1,22 +1,19 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { FaUserCircle, FaUpload, FaTrash, FaCheck } from "react-icons/fa";
+import { FaUpload, FaTrash, FaCheck, FaUsers } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import AccessToken from "../../auth/AccessToken";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-const ProfileImageUploader = ({
-  profilePicFromApi,
-  setToast,
-  onUploadSuccess,
-  setIsLoading,
-}) => {
+import AccessToken from "../auth/AccessToken";
+import { useSelector, useDispatch } from "react-redux";
+
+const TeamImageUploader = ({ profilePicFromApi, setToast, setIsLoading }) => {
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [currentPic, setCurrentPic] = useState(profilePicFromApi);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const userData = useSelector((state) => state.user);
+  const teamsData = useSelector((state) => state.team);
+  const teamId = teamsData.team.id;
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -26,6 +23,8 @@ const ProfileImageUploader = ({
   };
 
   const handleUpload = async (retried = false) => {
+    const accessToken = localStorage.getItem("accessToken");
+    const orgId = await userData?.organization?.id;
     if (!selectedFile) return;
     setIsLoading(true);
     const formData = new FormData();
@@ -33,40 +32,34 @@ const ProfileImageUploader = ({
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/users/${user.userId}/profile-picture`,
+        `http://localhost:3000/api/organization/${orgId}/team/${teamId}/avatar/upload`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
           body: formData,
         }
       );
-
       const data = await response.json();
       if (response.ok) {
         setToast({ message: data.message, type: "success" });
-        setCurrentPic(data.user.profilePic);
+        setCurrentPic(data.logoUrl);
         setPreviewImage(null);
         setSelectedFile(null);
-        onUploadSuccess(data); // حدث بيانات الريدكس
       } else if (data.message === "Token expired" && !retried) {
         const newAccessToken = await AccessToken({
-          refreshToken: user.refreshToken,
-          user,
+          userData,
           dispatch,
           navigate,
           setToast,
         });
         if (newAccessToken) {
-          user.accessToken = newAccessToken;
+          localStorage.setItem("accessToken", newAccessToken);
+          userData.accessToken = newAccessToken;
           await handleUpload(true);
         } else {
-          setToast({
-            message: "Could not refresh session.",
-            type: "error",
-          });
+          setToast({ message: "Could not refresh session.", type: "error" });
         }
       } else {
         setToast({ message: data.message || "Upload failed", type: "error" });
@@ -79,22 +72,21 @@ const ProfileImageUploader = ({
   };
 
   const handleDelete = async (retried = false) => {
-    // لو مفيش صورة جاية من الباك أصلاً
+    const accessToken = localStorage.getItem("accessToken");
+    const orgId = await userData?.organization?.id;
     if (!currentPic) {
       setPreviewImage(null);
       setSelectedFile(null);
       return;
     }
-
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:3000/api/users/${user.userId}/profile-picture`,
+        `http://localhost:3000/api/organization/${orgId}/team/${teamId}/avatar/delete`,
         {
           method: "DELETE",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );
@@ -106,20 +98,19 @@ const ProfileImageUploader = ({
           message: data.message || "Profile picture deleted",
           type: "success",
         });
-        setCurrentPic(null); // نحذف الصورة من الواجهة
+        setCurrentPic(null);
         setPreviewImage(null);
         setSelectedFile(null);
-        onUploadSuccess(data); // تحديث الريدكس بالصورة الجديدة
       } else if (data.message === "Token expired" && !retried) {
         const newAccessToken = await AccessToken({
-          refreshToken: user.refreshToken,
-          user,
+          userData,
           dispatch,
           navigate,
           setToast,
         });
         if (newAccessToken) {
-          user.accessToken = newAccessToken;
+          localStorage.setItem("accessToken", newAccessToken);
+          userData.accessToken = newAccessToken;
           await handleDelete(true);
         } else {
           setToast({
@@ -145,13 +136,13 @@ const ProfileImageUploader = ({
   return (
     <div className="editProfile-avatar-section">
       {imageToDisplay ? (
-        <img
-          src={imageToDisplay}
-          alt="Profile"
-          className="editProfile-avatar"
-        />
+        <img src={imageToDisplay} alt="Team" className="editProfile-avatar" />
       ) : (
-        <FaUserCircle size={80} className="editProfile-avatar-icon" />
+        <FaUsers
+          size={80}
+          color="#5C4033"
+          className="editProfile-avatar-icon"
+        />
       )}
 
       <div className="editProfile-avatar-buttons">
@@ -187,4 +178,4 @@ const ProfileImageUploader = ({
   );
 };
 
-export default ProfileImageUploader;
+export default TeamImageUploader;

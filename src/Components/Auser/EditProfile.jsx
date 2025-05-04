@@ -1,28 +1,28 @@
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import "../../Styles/EditProfile.css";
-import Toast from "../../Toast";
+import "../Styles/EditProfile.css";
+import Toast from "../Toast";
 import { useNavigate } from "react-router-dom";
-import AccessToken from "../../auth/AccessToken";
-import LoadingOverlay from "../../LoadingOverlay";
+import AccessToken from "../auth/AccessToken";
+import LoadingOverlay from "../LoadingOverlay";
 import ProfileImageUploader from "./ProfileImageUploader";
 ///////
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { getUser } from "../../store/userSlice";
+import { getUser } from "../store/userSlice";
 const EditProfile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [toast, setToast] = useState(null);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const userData = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   const [formDataState, setFormDataState] = useState({
-    firstName: user.firstName || "",
-    lastName: user.lastName || "",
-    jobTitle: user.jobTitle || "",
-    phoneNumber: user.phoneNumber || "",
-    bio: user.bio || "",
+    firstName: userData.firstName || "",
+    lastName: userData.lastName || "",
+    jobTitle: userData.jobTitle || "",
+    phoneNumber: userData.phoneNumber || "",
+    bio: userData.bio || "",
   });
 
   const handleInputChange = (e) => {
@@ -32,15 +32,18 @@ const EditProfile = () => {
   const handleSubmit = async (e, retried = false) => {
     e.preventDefault();
     setIsLoading(true);
-    const userId = user.id;
-    const accessToken = user.accessToken;
-    const payload = {
+    const userId = userData.id;
+    const accessToken = localStorage.getItem("accessToken");
+    const beforepayload = {
       firstName: formDataState.firstName.toLowerCase().trim(),
       lastName: formDataState.lastName.toLowerCase().trim(),
       jobTitle: formDataState.jobTitle.toLowerCase().trim(),
       phoneNumber: formDataState.phoneNumber.toLowerCase().trim(),
       bio: formDataState.bio.toLowerCase().trim(),
     };
+    const payload = Object.fromEntries(
+      Object.entries(beforepayload).filter(([, value]) => value !== "")
+    );
 
     try {
       const response = await fetch(
@@ -72,14 +75,13 @@ const EditProfile = () => {
         });
       } else if (data.message === "Token expired" && !retried) {
         const newAccessToken = await AccessToken({
-          refreshToken: user.refreshToken,
-          user,
+          userData,
           dispatch,
           navigate,
           setToast,
         });
         if (newAccessToken) {
-          user.accessToken = newAccessToken;
+          userData.accessToken = newAccessToken;
           await handleSubmit(e, true);
         } else {
           setToast({
@@ -119,7 +121,7 @@ const EditProfile = () => {
       </header>
       <h1 className="EditProfile-top">EditProfile</h1>
       <ProfileImageUploader
-        profilePicFromApi={user.profilePic}
+        profilePicFromApi={userData.profilePic}
         setToast={setToast}
         setIsLoading={setIsLoading}
         onUploadSuccess={(updatedUser) => dispatch(getUser(updatedUser))}
@@ -161,7 +163,7 @@ const EditProfile = () => {
             value={formDataState.firstName}
             onChange={handleInputChange}
             type="text"
-            defaultValue={user.firstName || "first"}
+            placeholder="first Name"
           />
         </label>
 
@@ -172,7 +174,7 @@ const EditProfile = () => {
             value={formDataState.lastName}
             onChange={handleInputChange}
             type="text"
-            defaultValue={user.lastName || "last"}
+            placeholder="last name"
           />
         </label>
 
@@ -183,7 +185,7 @@ const EditProfile = () => {
             value={formDataState.jobTitle}
             onChange={handleInputChange}
             type="text"
-            defaultValue={user.jobTitle || "web"}
+            placeholder="jobTitle"
           />
         </label>
 
@@ -194,7 +196,7 @@ const EditProfile = () => {
             value={formDataState.phoneNumber}
             onChange={handleInputChange}
             type="text"
-            defaultValue={user.phoneNumber || "0115883180"}
+            placeholder="0115883180"
           />
         </label>
 
@@ -204,7 +206,7 @@ const EditProfile = () => {
             name="bio"
             value={formDataState.bio}
             onChange={handleInputChange}
-            defaultValue={user.bio || "Computer Enginnering"}
+            placeholder="Computer Enginnering"
             maxLength="100"
           />
           <div className="editProfile-charcount">20/100</div>

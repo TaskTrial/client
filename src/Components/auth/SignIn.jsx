@@ -9,7 +9,6 @@ import LoadingOverlay from "../LoadingOverlay";
 import handleGoogleLogin from "../handleGoogleLogin";
 import { useDispatch } from "react-redux";
 import Toast from "../Toast";
-//import { useSelector } from "react-redux";
 import { login } from "../store/userSlice";
 function SignIn() {
   // const userData = useSelector((state) => state.user);
@@ -49,7 +48,6 @@ function SignIn() {
     setIsLoading(true);
 
     const checkbox = document.getElementById("check");
-    console.log(checkbox);
     if (checkbox.checked) {
       localStorage.setItem("rememberMe", "true");
     } else {
@@ -78,23 +76,28 @@ function SignIn() {
       });
       const data = await response.json();
       if (response.ok) {
-        // console.log(JSON.stringify(data));
         setToast({
           message: data.message || "logging successfully",
           type: "success",
         });
-        // Store the tokens in localStorage or cookies
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("refreshToken", data.refreshToken);
-        // Store the user details
         localStorage.setItem("user", JSON.stringify(data.user));
         dispatch(login(data));
         setMessage({ text: data.message, type: "success" });
-        // Redirect to home (dashboard initial home page)
         localStorage.setItem("auth", "true");
         setTimeout(() => {
-          navigate("/Home"); //because it rerender down in effect
+          navigate("/Home");
         }, 1500);
+        // if (orgid) {
+        //   setTimeout(() => {
+        //     navigate("/Home"); //because it rerender down in effect
+        //   }, 1500);
+        // } else {
+        //   setTimeout(() => {
+        //     navigate("/Home/CreateOrganization");
+        //   }, 1500);
+        // }
       }
       //  else if (response.status == 401) {
       //   alert(`Error: ${response.status} - ${response.statusText}`);}
@@ -174,7 +177,7 @@ function SignIn() {
           </div>
           {/* ////////////////////// */}
           <form onSubmit={handleSubmit} action="" method="post">
-            <label htmlFor="email"> Email:</label> <br />
+            <label htmlFor="email"> Email:</label>
             <input
               type="email"
               name="email"
@@ -184,7 +187,7 @@ function SignIn() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <label htmlFor="password">Password:</label> <br />
+            <label htmlFor="password">Password:</label>
             <div className="Signpassword-wrapper">
               <input
                 className="SignShow"

@@ -1,0 +1,67 @@
+.department-details-container {
+  padding: 40px 20px;
+  background-color: var(--secondColor);
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+@media screen and (max-width: 767px) {
+  .department-details-container {
+    min-height: calc(100vh - 74px);
+  }
+}
+.loading-text,
+.error-text {
+  font-size: 18px;
+  color: #888;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.department-box {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 900px;
+  margin: auto;
+  border-left: 6px solid var(--thirdColor);
+  margin-bottom: 15px;
+}
+
+.dept-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #222;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.department-box p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 8px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.department-box h3 {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 6px;
+}
+
+.department-box ul {
+  padding-left: 20px;
+  margin-top: 5px;
+}
+
+.department-box ul li {
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: #444;
+  list-style: disc;
+}

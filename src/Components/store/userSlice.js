@@ -86,12 +86,37 @@ const userSlice = createSlice({
       //localStorage.setItem("user", JSON.stringify({ id, email, role }));
     },
     getUser(state, action) {
+      // Object.assign(state, action.payload.user);
       const userData = action.payload.user;
+      if (userData) {
+        Object.keys(userData).forEach((key) => {
+          if (key in state) {
+            state[key] = userData[key];
+          }
+        });
+      }
       Object.keys(userData).forEach((key) => {
         if (key in state) {
           state[key] = userData[key];
         }
       });
+      const userData2 = action.payload.getUser;
+      if (userData2) {
+        Object.keys(userData2).forEach((key) => {
+          if (key in state) {
+            state[key] = userData2[key];
+          }
+        });
+      }
+
+      const userData3 = action.payload;
+      if (userData3) {
+        Object.keys(userData3).forEach((key) => {
+          if (key in state) {
+            state[key] = userData3[key];
+          }
+        });
+      }
     },
     logout(state) {
       state.id = "";
