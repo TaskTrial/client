@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchTeams } from "./fetchTeams";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import "../styles/Departments.css";
+import "../Styles/Departments.css";
 import { useSelector } from "react-redux";
 import LoadingOverlay from "../LoadingOverlay";
 import Toast from "../Toast";

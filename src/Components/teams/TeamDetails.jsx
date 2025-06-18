@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchTeamDetails } from "./fetchTeamDetails";
-import "../styles/DepartmentDetails.css";
+import "../Styles/DepartmentDetails.css";
 import { MdEdit } from "react-icons/md";
 import { FaArrowRight, FaArrowLeft, FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
