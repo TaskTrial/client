@@ -11,6 +11,9 @@ function More() {
   const handleDepartments = () => {
     navigate("/Home/Departments");
   };
+  const handleTeams = () => {
+    navigate("/Home/Teams");
+  };
   return (
     <>
       <div className="More">
@@ -26,6 +29,13 @@ function More() {
             <button className="More-button">
               <FaSitemap size={18} />
               My Departments
+            </button>
+            <FaArrowRight className="profile-back-icon" />
+          </div>
+          <div className="More-field" onClick={handleTeams}>
+            <button className="More-button">
+              <FaSitemap size={18} />
+              My Teams
             </button>
             <FaArrowRight className="profile-back-icon" />
           </div>

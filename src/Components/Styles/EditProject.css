@@ -1,0 +1,86 @@
+.updateproject-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fffaf5;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.updateproject-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+}
+
+.updateproject-back-icon {
+  color: #ff914d;
+  font-size: 18px;
+}
+
+.updateproject-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #e67e22;
+}
+
+.updateproject-heading {
+  text-align: center;
+  color: #e67e22;
+  margin-bottom: 1.5rem;
+}
+
+.updateproject-form label {
+  display: block;
+  margin-bottom: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.updateproject-form input,
+.updateproject-form select,
+.updateproject-form textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  font-size: 1rem;
+  margin-top: 6px;
+  box-sizing: border-box;
+}
+
+.updateproject-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.updateproject-save-button {
+  background-color: #ff7e33;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: block;
+  margin: 1.5rem auto 0;
+  transition: background-color 0.3s;
+}
+
+.updateproject-save-button:hover {
+  background-color: #e8671f;
+}
+
+@media (max-width: 600px) {
+  .updateproject-container {
+    padding: 1rem;
+  }
+
+  .updateproject-save-button {
+    width: 100%;
+  }
+}

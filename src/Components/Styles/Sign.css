@@ -132,10 +132,10 @@ input.SignShow {
   margin: 20px 0;
   position: relative;
 }
-form {
+.Signform {
   color: var(--colorParagraph);
 }
-form input {
+.Signform input {
   display: block;
   margin-bottom: 15px;
   padding: var(--section-padding);
@@ -144,10 +144,10 @@ form input {
   border: 1px solid #aaa;
   width: 100%;
 }
-form input::placeholder {
+.Signform input::placeholder {
   color: #aaa;
 }
-form input:focus {
+.Signform input:focus {
   outline: none;
   border: 1px solid var(--thirdColor);
 }
@@ -169,8 +169,8 @@ form input:focus {
 /* form input:checked {
   accent-color: var(--thirdColor); 
 } */
-form .SignforgetPassword input[type="checkbox"],
-form .SignforgetPassword label {
+.Signform .SignforgetPassword input[type="checkbox"],
+.Signform .SignforgetPassword label {
   accent-color: var(--thirdColor);
   margin-bottom: 0;
   color: var(--thirdColor);
@@ -198,7 +198,7 @@ form .SignforgetPassword label {
 .SignfirstLast > div input {
   margin-bottom: 0;
 }
-form .SignsubmitForm input {
+.Signform .SignsubmitForm input {
   cursor: pointer;
 }
 .SignsubmitForm input {

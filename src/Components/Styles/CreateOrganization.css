@@ -34,7 +34,7 @@
 .create-organization-form input,
 .create-organization-form select {
   width: 100%;
-  padding: 20px;
+  padding: 10px;
   margin-top: 5px;
   border-radius: 20px;
   border: 1px solid #ccc;

@@ -2,7 +2,6 @@ import "./Styles/Home.css";
 ///////icons////////
 import { MdApps } from "react-icons/md";
 import { MdWorkOutline } from "react-icons/md";
-import { MdChatBubbleOutline } from "react-icons/md";
 import { MdChecklist } from "react-icons/md";
 import { MdMoreHoriz } from "react-icons/md";
 import { FaUniversity } from "react-icons/fa";
@@ -26,6 +25,7 @@ import { FaSitemap } from "react-icons/fa"; // FontAwesome
   /* <LoadingOverlay isLoading={isLoading} /> */
 }
 import Toast from "./Toast";
+import CreateMenuModal from "./CreateMenuModal";
 // import Toast from "./Toast"; toaster
 // const [toast, setToast] = useState(null);
 // {toast && (
@@ -48,6 +48,7 @@ function Home() {
   const currentPath = location.pathname;
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   // const storedStatus = localStorage.getItem("isSidebarOpen") || "true";
   // const [isSidebarOpen, setIsSidebarOpen] = useState(storedStatus);
   // useEffect(() => {
@@ -134,6 +135,7 @@ function Home() {
           onClose={() => setToast(null)}
         />
       )}
+      {showModal && <CreateMenuModal onClose={() => setShowModal(false)} />}
       <button
         className={`Hometoggle-btn ${
           isSidebarOpen ? "Homebtn-open" : "Homebtn-closed"
@@ -149,9 +151,12 @@ function Home() {
           }`}
         >
           <h1>task trial</h1>
-          <div className="Homecreate-project">
+          <div
+            className="Homecreate-project"
+            onClick={() => setShowModal(true)}
+          >
             <span>+</span>
-            <span>create new project</span>
+            <span className="plusspan">create new org,project,....</span>
           </div>
           <ul>
             <li
@@ -191,22 +196,22 @@ function Home() {
             </li>
             <li className={currentPath === "/Home/Tasks" ? "Homeactive" : ""}>
               <Link to="/Home/Tasks">
-                <MdChatBubbleOutline
+                <MdChecklist
                   size={24}
                   color={currentPath === "/Home/Tasks" ? "orangered" : "white"}
                 />
                 <span>Tasks</span>
               </Link>
             </li>
-            <li className={currentPath === "/Home/Chat" ? "Homeactive" : ""}>
+            {/* <li className={currentPath === "/Home/Chat" ? "Homeactive" : ""}>
               <Link to="/Home/Chat">
-                <MdChecklist
+                <MdChatBubbleOutline
                   size={24}
                   color={currentPath === "/Home/Chat" ? "orangered" : "white"}
                 />
                 <span>Chat</span>
               </Link>
-            </li>
+            </li> */}
             <li
               className={`showMore ${
                 currentPath === "/Home/More" ? "Homeactive" : ""
@@ -266,38 +271,6 @@ function Home() {
                   }
                 />
                 <span>My Departments</span>
-              </Link>
-            </li>
-            <li
-              className={`hiddenforMore ${
-                currentPath === "/Home/CreateDepartment" ? "Homeactive" : ""
-              }`}
-            >
-              <Link to="/Home/CreateDepartment" state={{ from: "/Home" }}>
-                <FaSitemap
-                  size={24}
-                  color={
-                    currentPath === "/Home/CreateDepartment"
-                      ? "orangered"
-                      : "white"
-                  }
-                />
-                <span>Create a Department</span>
-              </Link>
-            </li>
-            <li
-              className={`hiddenforMore ${
-                currentPath === "/Home/CreateTeam" ? "Homeactive" : ""
-              }`}
-            >
-              <Link to="/Home/CreateTeam" state={{ from: "/Home" }}>
-                <FaSitemap
-                  size={24}
-                  color={
-                    currentPath === "/Home/CreateTeam" ? "orangered" : "white"
-                  }
-                />
-                <span>Create a Team</span>
               </Link>
             </li>
             <li

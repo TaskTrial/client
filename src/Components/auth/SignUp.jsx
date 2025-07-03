@@ -7,11 +7,14 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import handleGoogleLogin from "../handleGoogleLogin";
 import LoadingOverlay from "../LoadingOverlay";
+import Toast from "../Toast";
+
 function SignUp() {
   const navigate = useNavigate();
   const [message, setMessage] = useState({ text: "", type: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [toast, setToast] = useState(null);
 
   const handleReset = () => {
     setFormData({
@@ -51,7 +54,7 @@ function SignUp() {
   // };
 
   const logIn = () => {
-    handleGoogleLogin(setIsLoading, navigate);
+    handleGoogleLogin(setIsLoading, navigate, setToast);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,6 +138,13 @@ function SignUp() {
     <>
       {/* ${isLoading ? "Signblur-content" : ""} */}
       <LoadingOverlay isLoading={isLoading} />
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
       <div className={`Signsignup`}>
         <div className="Signview">
           <div className="Signcontent">
@@ -171,7 +181,12 @@ function SignUp() {
             <span>----or Sign up with Email----</span>
           </div>
           {/* ////////////////////// */}
-          <form onSubmit={handleSubmit} action="" method="post">
+          <form
+            className="Signform"
+            onSubmit={handleSubmit}
+            action=""
+            method="post"
+          >
             <div className="SignfirstLast">
               <div>
                 <label

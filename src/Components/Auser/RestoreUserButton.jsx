@@ -88,10 +88,14 @@ const RestoreUserButton = ({ setToast, setIsLoading }) => {
       )}
 
       <div
+        style={{ backgroundColor: "#28a745" }}
         className="profile-action restoreaction"
         onClick={() => setShowConfirm(true)}
       >
-        <button className="profile-button">
+        <button
+          style={{ backgroundColor: "#28a745", color: "#fff" }}
+          className="profile-button"
+        >
           <MdRestore size={18} />
           Restore User
         </button>

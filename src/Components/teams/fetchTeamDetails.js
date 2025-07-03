@@ -3,17 +3,19 @@ import { setTeam } from "../store/teamSlice";
 
 export const fetchTeamDetails = async ({
   userData,
-  TeamId,
+  teamId,
   setToast,
   setIsLoading,
   dispatch,
   navigate,
   retried = false,
+  onSuccess,
+  // onSuccess = () => {},
 }) => {
   const Access = localStorage.getItem("accessToken");
   const orgId = await userData.organization?.id;
 
-  if (!Access || !orgId || !TeamId) {
+  if (!Access || !orgId || !teamId) {
     setToast({
       message: "Missing data to fetch department details",
       type: "error",
@@ -24,7 +26,7 @@ export const fetchTeamDetails = async ({
 
   try {
     const response = await fetch(
-      `http://localhost:3000/api/organization/${orgId}/Teams/${TeamId}`,
+      `http://localhost:3000/api/organization/${orgId}/Teams/${teamId}`,
       {
         method: "GET",
         headers: {
@@ -38,6 +40,8 @@ export const fetchTeamDetails = async ({
 
     if (response.ok) {
       dispatch(setTeam(data));
+      if (onSuccess) onSuccess(data);
+      // onSuccess(data.data.members);
       console.log(data);
       setToast({
         message: data.message || "Team loaded successfully",

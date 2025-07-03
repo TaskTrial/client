@@ -26,6 +26,8 @@ export async function getOrganizationStatus({
     );
     const data = await response.json();
     if (response.ok) {
+      localStorage.setItem("orgId", data.organization.id);
+
       dispatch(setOrganization(data)); //not essential
       const existingOrgData =
         JSON.parse(localStorage.getItem("dataOrganization")) || {};

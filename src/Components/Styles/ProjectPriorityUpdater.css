@@ -1,0 +1,19 @@
+.project-priority-updater {
+  margin-top: 1.5rem;
+}
+
+.project-priority-updater label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #444;
+  font-weight: 500;
+}
+
+.project-priority-updater select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff5eb;
+  color: #e67e22;
+  font-weight: 600;
+}

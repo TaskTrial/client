@@ -181,6 +181,7 @@ const Profile = () => {
             setToast={setToast}
             setIsLoading={setIsLoading}
           />
+
           <RestoreUserButton setToast={setToast} setIsLoading={setIsLoading} />
           <GetAllUsersButton setToast={setToast} setIsLoading={setIsLoading} />
         </div>

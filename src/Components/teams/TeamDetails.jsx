@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { fetchTeamDetails } from "./fetchTeamDetails";
 import "../Styles/DepartmentDetails.css";
 import { MdEdit } from "react-icons/md";
 import { FaArrowRight, FaArrowLeft, FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { FaProjectDiagram } from "react-icons/fa";
 import LoadingOverlay from "../LoadingOverlay";
 import Toast from "../Toast";
 import "../Styles/DepartmentDetails.css";
 import DeleteTeamButton from "./DeleteTeamButton";
 import DeleteMemberButton from "./DeleteMemberButton";
+import { useParams } from "react-router-dom";
+import RestoreProjectButton from "../projects/RestoreProjectButton";
 // import DeleteDepartmentButton from "./DeleteDepartmentButton";
 const TeamDetails = () => {
-  const { id: TeamId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user);
@@ -22,21 +24,21 @@ const TeamDetails = () => {
   const members = useSelector((state) => state.team.members);
   const [toast, setToast] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { id: teamId } = useParams();
 
   useEffect(() => {
     const getTeam = async () => {
       await fetchTeamDetails({
         userData,
-        TeamId,
+        teamId,
         setToast,
         setIsLoading,
         navigate,
         dispatch,
       });
     };
-
     getTeam();
-  }, [TeamId, dispatch, navigate, userData]);
+  }, [teamId, dispatch, navigate, userData]);
   return (
     <>
       <LoadingOverlay isLoading={isLoading} />
@@ -50,7 +52,9 @@ const TeamDetails = () => {
       <div className="department-details-container">
         <header
           className="profile-header"
-          onClick={() => navigate(`/Home/Teams`)}
+          onClick={() => {
+            navigate(`/Home/Teams`);
+          }}
         >
           <FaArrowLeft className="profile-back-icon" />
           <h6 className="profile-title">Teams</h6>
@@ -127,7 +131,21 @@ const TeamDetails = () => {
             <div className="profile-actions">
               <div
                 className="profile-action"
-                onClick={() => navigate(`/Home/teams/${TeamId}/EditTeam`)}
+                onClick={() => {
+                  navigate(`/Home/TeamProjects`, {
+                    state: { teamId: teamId },
+                  });
+                }}
+              >
+                <button className="profile-button">
+                  <FaProjectDiagram size={18} color="#ff8c42" />
+                  projects of this team
+                </button>
+                <FaArrowRight className="profile-back-icon" />
+              </div>
+              <div
+                className="profile-action"
+                onClick={() => navigate(`/Home/Teams/${teamId}/EditTeam`)}
               >
                 <button className="profile-button">
                   <MdEdit size={18} />
@@ -135,6 +153,11 @@ const TeamDetails = () => {
                 </button>
                 <FaArrowRight className="profile-back-icon" />
               </div>
+              <RestoreProjectButton
+                setToast={setToast}
+                setIsLoading={setIsLoading}
+              />
+
               <DeleteTeamButton
                 setToast={setToast}
                 setIsLoading={setIsLoading}

@@ -1,15 +1,17 @@
 import clipMessage from "../../assets/clip-message.png";
-import googlePicture from "../../assets/google.png";
 import "../Styles/Sign.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import LoadingOverlay from "../LoadingOverlay";
-import handleGoogleLogin from "../handleGoogleLogin";
+// import googlePicture from "../../assets/google.png";
+// import handleGoogleLogin from "../handleGoogleLogin";
 import { useDispatch } from "react-redux";
 import Toast from "../Toast";
 import { login } from "../store/userSlice";
+//////////////google use Oauthgoogle///////
+import GoogleLoginButton from "../google/GoogleLoginButton.";
 function SignIn() {
   // const userData = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -29,20 +31,21 @@ function SignIn() {
     setEmail("");
     setPassword("");
   };
-  const logIn = () => {
-    handleGoogleLogin(setIsLoading, navigate);
-    // window.open("http://localhost:3000/api/auth/google");
-    // window.location.href = "http://localhost:3000/api/auth/google";
-    // const response = await fetch("http://localhost:3000/api/auth/firebase", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //   },
-    //   // body: JSON.stringify({ idToken }),
-    // });
-    // console.log(response.JSON());
-  };
+  // const logIn = () => {
+  //   handleGoogleLogin(setIsLoading, navigate, setToast);
+  // window.open("http://localhost:3000/api/auth/google");
+  // window.location.href = "http://localhost:3000/api/auth/google";
+  // const response = await fetch("http://localhost:3000/api/auth/firebase", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Accept: "application/json",
+  //   },
+  //   // body: JSON.stringify({ idToken }),
+  // });
+  // console.log(response.JSON());
+  // };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -55,8 +58,8 @@ function SignIn() {
     }
 
     const credentials = {
-      email: email.toLowerCase().trim(),
-      password: password.toLowerCase().trim(),
+      email: email.trim(),
+      password: password.trim(),
     };
     if (password.length < 8) {
       setMessage({
@@ -80,6 +83,7 @@ function SignIn() {
           message: data.message || "logging successfully",
           type: "success",
         });
+        localStorage.setItem("userId", data.user.id);
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("refreshToken", data.refreshToken);
         localStorage.setItem("user", JSON.stringify(data.user));
@@ -163,7 +167,7 @@ function SignIn() {
             <p>See what is going on with your business</p>
           </div>
           {/* Google Button */}
-          <button onClick={logIn} className="Signgoogle-btn">
+          {/* <button onClick={loginWithGoogle} className="Signgoogle-btn">
             <img
               src={googlePicture}
               width="20px"
@@ -171,12 +175,36 @@ function SignIn() {
               alt="googlePicture"
             />
             {isLoading ? "Loading..." : "Continue with Google"}
-          </button>
+          </button> */}
+          {/* google buton */}
+          <GoogleLoginButton
+            onSuccess={(result) => {
+              dispatch(login(result));
+              setToast({ message: "Logged in successfully", type: "success" });
+              localStorage.setItem("auth", "true");
+              setTimeout(() => {
+                navigate("/Home");
+              }, 1500);
+            }}
+            onError={(err) => {
+              setToast({
+                message: err.message || "Google login failed",
+                type: "error",
+              });
+            }}
+            text="Continue with Google"
+          />
+
           <div className="Signdivider">
             <span>----or Sign In with Email----</span>
           </div>
           {/* ////////////////////// */}
-          <form onSubmit={handleSubmit} action="" method="post">
+          <form
+            className="Signform"
+            onSubmit={handleSubmit}
+            action=""
+            method="post"
+          >
             <label htmlFor="email"> Email:</label>
             <input
               type="email"

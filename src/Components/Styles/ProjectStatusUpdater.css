@@ -1,0 +1,19 @@
+.project-status-updater {
+  margin-top: 1.5rem;
+}
+
+.project-status-updater label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #444;
+  font-weight: 500;
+}
+
+.project-status-updater select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff5eb;
+  color: #d35400;
+  font-weight: 600;
+}

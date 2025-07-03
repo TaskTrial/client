@@ -8,7 +8,7 @@
 cd client
 #install first include node_modules
 npm install
-# run the server
+# run the client
 npm run dev # and makesure there is no error
 ```
 

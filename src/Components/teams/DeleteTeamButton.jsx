@@ -13,8 +13,8 @@ const DeleteTeamButton = ({ setToast, setIsLoading }) => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user);
   const teamId = useSelector((state) => state.team.team.id);
+  const orgId = localStorage.getItem("orgId");
   const handleDeleteTeam = async (retried = false) => {
-    const orgId = await userData?.organization?.id;
     setIsLoading(true);
     const accessToken = localStorage.getItem("accessToken");
 

@@ -1,0 +1,87 @@
+/* src/Styles/EditTask.css */
+
+.edittask-container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff5ec;
+  border-radius: 12px;
+  min-height: 100vh;
+}
+
+.edittask-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #f76707;
+  margin-bottom: 10px;
+}
+
+.edittask-back-icon {
+  margin-right: 8px;
+}
+
+.edittask-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #f76707;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edittask-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.edittask-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #444;
+}
+
+.edittask-form input,
+.edittask-form textarea,
+.edittask-form select {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  margin-top: 5px;
+  background-color: #fffdfc;
+}
+
+.edittask-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.edittask-save-button {
+  padding: 10px 14px;
+  background-color: #ffa94d;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.edittask-save-button:hover {
+  background-color: #f76707;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .edittask-container {
+    padding: 15px;
+  }
+
+  .edittask-title {
+    font-size: 1.4rem;
+  }
+}

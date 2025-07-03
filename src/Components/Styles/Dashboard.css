@@ -4,7 +4,6 @@
   color: #000;
   overflow-x: hidden;
   word-break: break-all;
-  white-space: wrap;
 }
 /* dashboard header */
 .dashboard-header {
@@ -51,8 +50,7 @@
 }
 
 .dashboard-value {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .dashboard-status {
@@ -122,9 +120,9 @@
   font-size: 14px;
   line-height: 1.5;
 }
-.project-row span:nth-of-type(1) {
+/* .project-row span:nth-of-type(1) {
   min-width: 160px;
-}
+} */
 /* ======================
      Status Labels
   ====================== */
@@ -137,25 +135,36 @@
   font-size: 13px;
   white-space: nowrap;
 }
-
+.planning {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+.active {
+  background-color: #d1fae5;
+  color: #065f46;
+}
 .completed {
   background-color: #d2f4dd;
   color: #2e7d32;
 }
 
-.delayed {
-  background-color: #fbe4a1;
-  color: #b26a00;
+.on_hold {
+  background-color: #fef9c3;
+  color: #92400e;
+}
+.canceled {
+  background-color: #fee2e2;
+  color: #991b1b;
 }
 
-.at-risk {
-  background-color: #f8c9c9;
-  color: #c62828;
+.todo {
+  background-color: #e0e7ff;
+  color: #3730a3;
 }
 
-.approved {
-  background-color: #d2f4dd;
-  color: #2e7d32;
+.in_progress {
+  background-color: #fef3c7;
+  color: #92400e;
 }
 
 .review {
@@ -163,26 +172,80 @@
   color: #c62828;
 }
 
-.ongoing {
-  background-color: #ffe0c7;
-  color: #e85d04;
+.done {
+  background-color: #d1fae5;
+  color: #065f46;
 }
-
+@media (max-width: 1070px) {
+  /* .project-row span:nth-of-type(1) {
+    min-width: 110px;
+  } */
+  .project-row span:has(div:nth-child(2)) {
+    min-width: 110px;
+  }
+  .task-row span:has(div:nth-child(2)) {
+    min-width: 110px;
+  }
+}
 /* ======================
      Progress Circles
   ====================== */
 
-.progress-circle {
-  width: 45px;
-  height: 45px;
+.progress-ring {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  font-size: 12px;
-  font-weight: bold;
+  background: conic-gradient(
+    currentColor var(--progress),
+    #e0e0e0 var(--progress)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #e0e0e0;
+  position: relative;
+  color: #999;
 }
+
+.progress-ring-inner {
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 2;
+}
+.progress-ring.planning {
+  color: #0369a1;
+}
+.progress-ring.active {
+  color: #065f46;
+}
+.progress-ring.completed {
+  color: #2e7d32;
+}
+.progress-ring.on_hold {
+  color: #92400e;
+}
+.progress-ring.canceled {
+  color: #991b1b;
+}
+.progress-ring.todo {
+  color: #3730a3;
+}
+.progress-ring.in_progress {
+  color: #92400e;
+}
+.progress-ring.review {
+  color: #c62828;
+}
+.progress-ring.done {
+  color: #065f46;
+}
+
 .dashboard-profile-iconBack {
   width: 60px;
   height: 60px;
@@ -190,17 +253,6 @@
   object-fit: cover;
   margin-bottom: 10px;
   cursor: pointer;
-}
-.green {
-  border: 4px solid #2e7d32;
-}
-
-.yellow {
-  border: 4px solid #fbc02d;
-}
-
-.red {
-  border: 4px solid #d32f2f;
 }
 
 /* ======================

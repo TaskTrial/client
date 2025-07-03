@@ -10,8 +10,7 @@ export const fetchTeams = async ({
   retried = false,
 }) => {
   const Access = localStorage.getItem("accessToken");
-  const orgId = await userData.organization?.id;
-
+  const orgId = localStorage.getItem("orgId");
   if (!Access || !orgId) {
     setToast({ message: "No organization info found", type: "error" });
     return;

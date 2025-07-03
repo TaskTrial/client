@@ -1,0 +1,103 @@
+.createtask-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #fff8f1;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(255, 140, 0, 0.15);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.createtask-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #ff7a00;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.createtask-header h6 {
+  margin-left: 0.5rem;
+}
+
+.createtask-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.createtask-container h2 {
+  display: flex;
+  align-items: center;
+  color: #ff7a00;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.createtask-container h2 svg {
+  margin-right: 0.5rem;
+}
+
+.createtask-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #333;
+}
+
+.createtask-form input[type="text"],
+.createtask-form input[type="number"],
+.createtask-form input[type="datetime-local"],
+.createtask-form select,
+.createtask-form textarea {
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+}
+
+.createtask-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.createtask-form select:focus,
+.createtask-form input:focus,
+.createtask-form textarea:focus {
+  outline: 2px solid #ffa94d;
+  border-color: #ffa94d;
+}
+
+.createtask-form button[type="submit"] {
+  background-color: #ff7a00;
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.createtask-form button[type="submit"]:hover {
+  background-color: #e06c00;
+}
+
+.createtask-form button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .createtask-container {
+    padding: 1.2rem;
+  }
+
+  .createtask-form h2 {
+    font-size: 1.5rem;
+  }
+}

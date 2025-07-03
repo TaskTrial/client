@@ -16,7 +16,6 @@ const AccessToken = async ({ userData, dispatch, navigate, setToast }) => {
     );
     const refreshData = await response.json();
     if (response.ok) {
-      console.log("12345");
       localStorage.setItem("accessToken", refreshData.accessToken);
       localStorage.setItem("auth", "true");
       // setToast({
@@ -47,9 +46,11 @@ const AccessToken = async ({ userData, dispatch, navigate, setToast }) => {
       return null;
     }
   } catch (error) {
-    console.log("123456");
+    setToast({
+      message: error.mssage || "something went rong",
+      type: "error",
+    });
 
-    setToast({ message: error.message, type: "error" });
     return null;
   }
 };

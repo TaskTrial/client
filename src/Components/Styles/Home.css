@@ -25,20 +25,23 @@
   padding: 5px 50px;
 }
 .Homemain-links .Homecreate-project {
-  width: fit-content;
-  background-color: #fff;
+  display: flex;
   padding: 5px;
-  border-radius: 10px;
   margin-left: 25px;
   margin-bottom: 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
 }
 .Homemain-links .Homecreate-project span:first-child {
-  color: #fff;
   background-color: var(--thirdColor);
+  color: #fff;
+  font-size: 30px;
   border-radius: 50%;
-  padding: 1px 5px;
-  font-size: 20px;
-  margin-right: 5px;
+  padding: 0px 10px;
+}
+.Homemain-links .Homecreate-project .plusspan {
+  align-self: center;
 }
 .Homemain-links ul {
   padding: 25px;
@@ -87,7 +90,7 @@ body {
   display: none;
 }
 .Homebtn-open {
-  left: 240px;
+  left: 260px;
 }
 .Homebtn-closed {
   left: 0px;
@@ -160,6 +163,10 @@ body {
     position: fixed;
     right: 30px;
     bottom: 90px;
+    background-color: unset;
+  }
+  .Homemain-links .Homecreate-project .plusspan {
+    display: none;
   }
 }
 .showMore {

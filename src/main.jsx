@@ -5,11 +5,16 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./Components/store/store.js";
+import { GoogleAuthProvider } from "./Components/google/GoogleAuthContext";
+
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <GoogleAuthProvider clientId={clientId}>
+          <App />
+        </GoogleAuthProvider>
       </BrowserRouter>
     </Provider>
   </StrictMode>

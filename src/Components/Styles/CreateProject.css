@@ -1,0 +1,205 @@
+.createproject-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #fff8f1;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(255, 140, 0, 0.15);
+  font-family: "Segoe UI", sans-serif;
+}
+.createtask-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #ff7a00;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.createtask-header h6 {
+  margin-left: 0.5rem;
+}
+
+.createtask-back-icon {
+  font-size: 1.2rem;
+}
+
+.createtask-form h2 {
+  display: flex;
+  align-items: center;
+  color: #ff7a00;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.createtask-task-icon {
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.createproject-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.createproject-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #ff7a00;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.createproject-header h6 {
+  margin-left: 0.5rem;
+}
+
+.createproject-container h2 {
+  display: flex;
+  align-items: center;
+  color: #ff7a00;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.createproject-container h2 svg {
+  margin-right: 0.5rem;
+}
+
+.createproject-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #333;
+}
+
+.createproject-form input[type="text"],
+.createproject-form input[type="number"],
+.createproject-form input[type="datetime-local"],
+.createproject-form select,
+.createproject-form textarea {
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+}
+
+.createproject-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.createproject-form select:focus,
+.createproject-form input:focus,
+.createproject-form textarea:focus {
+  outline: 2px solid #ffa94d;
+  border-color: #ffa94d;
+}
+
+.createproject-toggle-members-button {
+  background-color: #ff7a00;
+  color: white;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.createproject-toggle-members-button:hover {
+  background-color: #e06c00;
+}
+
+.createproject-add-project-members {
+  background-color: #fff3e6;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.createproject-add-project-members h4 {
+  color: #ff7a00;
+  margin-bottom: 0.8rem;
+}
+
+.createproject-selected-user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  gap: 0.5rem;
+}
+
+.createproject-selected-user input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-right: 0.5rem;
+}
+
+.createproject-selected-user span {
+  flex-grow: 1;
+}
+
+.createproject-selected-user .role-select {
+  padding: 0.4rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  min-width: 90px;
+}
+
+.createproject-form input[type="range"] {
+  width: 100%;
+  accent-color: #ff7a00;
+  margin-top: 0.3rem;
+}
+
+.createproject-form label[for="progress"] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.createproject-form button[type="submit"] {
+  background-color: #ff7a00;
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.createproject-form button[type="submit"]:hover {
+  background-color: #e06c00;
+}
+
+.createproject-form button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .createproject-container {
+    padding: 1.2rem;
+  }
+
+  .createproject-form h2 {
+    font-size: 1.5rem;
+  }
+
+  .createproject-selected-user {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .createproject-selected-user .role-select {
+    width: 100%;
+  }
+}

@@ -2,7 +2,7 @@
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "./firebase-config";
 
-const handleGoogleLogin = async (setIsLoading, navigate) => {
+const handleGoogleLogin = async (setIsLoading, navigate, setToast) => {
   setIsLoading(true);
 
   try {
@@ -14,12 +14,12 @@ const handleGoogleLogin = async (setIsLoading, navigate) => {
     //   const token = credential.accessToken;
     //   const user = result.user;
     if (!credential?.idToken) {
-      alert("No ID token found from Google");
+      setToast("No ID token found from Google");
       setIsLoading(false);
       return;
     }
-
     const idToken = credential.idToken;
+
     console.log("Google ID Token:", idToken);
 
     const response = await fetch("http://localhost:3000/api/auth/google", {
@@ -36,23 +36,35 @@ const handleGoogleLogin = async (setIsLoading, navigate) => {
     if (response.ok) {
       setIsLoading(false);
       console.log("Login Success:", data);
-      alert(`welcome ${data.user.name}`);
+      setToast({
+        message: `welcome ${data.user.name}`,
+        type: "success",
+      });
+
       // routing to anther page or store data in localstorage
+      localStorage.setItem("userId", data.user.id);
       localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("accessToken", data.tokens.accessToken);
-      localStorage.setItem("refreshToken", data.tokens.refreshToken);
-      navigate("/SignIn");
-      alert("please sign before access to your account");
+
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      navigate("/Home");
     } else {
-      alert("login failed:" + data.message);
+      setToast({
+        message: "login failed:" + data.message,
+        type: "error",
+      });
     }
   } catch (error) {
-    console.error("Google login error:", error);
     if (error.code === "auth/popup-closed-by-user") {
-      alert("Login canceled by user.");
+      setToast({
+        message: "Login canceled by user.",
+        type: "error",
+      });
     } else {
-      console.error("Google login error:", error.message);
-      alert("An error occurred while logging in");
+      setToast({
+        message: error.message || "An error occurred while logging in",
+        type: "error",
+      });
     }
   } finally {
     setIsLoading(false);
