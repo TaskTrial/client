@@ -14,29 +14,82 @@ const googleAuthService = {
       throw new Error("Access token is required");
     }
 
-    const response = await fetch(`${API_URL}/api/auth/google`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ access_token }),
-    });
+    try {
+      const response = await fetch(`${API_URL}/api/auth/google`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ access_token }),
+        credentials: "include",
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(data.message || "Login failed");
+      if (!response.ok) {
+        throw new Error(
+          data.message || `Login failed with status ${response.status}`
+        );
+      }
+
+      const { accessToken, refreshToken, user } = data;
+
+      if (accessToken) {
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("auth", "true");
+        localStorage.setItem("userId", user.id);
+      }
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  /**
+   * Exchange authorization code for tokens
+   * @param {string} code - The authorization code from Google
+   * @returns {Promise<Object>} user data and tokens
+   */
+  async exchangeCodeForTokens(code) {
+    if (!code) {
+      throw new Error("Authorization code is required");
     }
 
-    const { accessToken, refreshToken, user } = data;
+    try {
+      const response = await fetch(`${API_URL}/api/auth/google/callback`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code }),
+        credentials: "include",
+      });
 
-    if (accessToken) {
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
-      localStorage.setItem("user", JSON.stringify(user));
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message || `Code exchange failed with status ${response.status}`
+        );
+      }
+
+      const { accessToken, refreshToken, user } = data;
+
+      if (accessToken) {
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("auth", "true");
+        localStorage.setItem("userId", user.id);
+      }
+
+      return data;
+    } catch (error) {
+      throw error;
     }
-
-    return data;
   },
 
   /**
@@ -61,19 +114,23 @@ const googleAuthService = {
    * @returns {Promise<void>}
    */
   async logout() {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("user");
-
     try {
       await fetch(`${API_URL}/api/auth/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
+        credentials: "include",
       });
     } catch (error) {
-      console.log(error.message);
+      // Ignore logout errors
+    } finally {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("user");
+      localStorage.removeItem("auth");
+      localStorage.removeItem("userId");
     }
   },
 };

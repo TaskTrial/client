@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import Toast from "../Toast";
 import { login } from "../store/userSlice";
 //////////////google use Oauthgoogle///////
-import GoogleLoginButton from "../google/GoogleLoginButton.";
+import GoogleLoginButton from "../google/GoogleLoginButton";
 function SignIn() {
   // const userData = useSelector((state) => state.user);
   const navigate = useNavigate();

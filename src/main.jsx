@@ -7,7 +7,16 @@ import { Provider } from "react-redux";
 import { store } from "./Components/store/store.js";
 import { GoogleAuthProvider } from "./Components/google/GoogleAuthContext";
 
+// Get the Google client ID from environment variables
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+// Check if client ID is available
+if (!clientId) {
+  console.warn(
+    "VITE_GOOGLE_CLIENT_ID is not defined in your environment variables. Google authentication will not work."
+  );
+}
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
