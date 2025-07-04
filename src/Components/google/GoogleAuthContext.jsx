@@ -14,11 +14,26 @@ export const GoogleAuthProvider = ({ children, clientId }) => {
 
   // Check authentication state on mount
   useEffect(() => {
-    const isAuth = googleAuthService.isAuthenticated();
-    const currentUser = googleAuthService.getCurrentUser();
-    setIsAuthenticated(isAuth);
-    setUser(currentUser);
-    setLoading(false);
+    const checkAuthState = () => {
+      const isAuth = googleAuthService.isAuthenticated();
+      const currentUser = googleAuthService.getCurrentUser();
+
+      setIsAuthenticated(isAuth);
+      setUser(currentUser);
+      setLoading(false);
+    };
+
+    checkAuthState();
+
+    // Listen for storage events (for multi-tab support)
+    const handleStorageChange = (e) => {
+      if (e.key === "accessToken" || e.key === "user" || e.key === "auth") {
+        checkAuthState();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
   // Handle successful login
@@ -49,18 +64,37 @@ export const GoogleAuthProvider = ({ children, clientId }) => {
     isAuthenticated,
     loading,
     updateAuthState,
-    login: async (idToken) => {
-      const result = await googleAuthService.loginWithGoogle(idToken);
-      return handleLoginSuccess(result);
+    login: async (accessToken) => {
+      try {
+        const result = await googleAuthService.loginWithGoogle(accessToken);
+        return handleLoginSuccess(result);
+      } catch (error) {
+        throw error;
+      }
+    },
+    exchangeCode: async (code) => {
+      try {
+        const result = await googleAuthService.exchangeCodeForTokens(code);
+        return handleLoginSuccess(result);
+      } catch (error) {
+        throw error;
+      }
     },
     logout: handleLogout,
   };
 
+  if (!clientId) {
+    console.warn(
+      "Google OAuth client ID is not provided. Google authentication will not work."
+    );
+    return <>{children}</>;
+  }
+
   return (
     <GoogleOAuthProvider
       clientId={clientId}
-      onScriptLoadError={() => {
-        console.error("Google OAuth script failed to load.");
+      onScriptLoadError={(error) => {
+        console.error("Google OAuth script failed to load:", error);
       }}
     >
       <GoogleAuthContext.Provider value={contextValue}>
