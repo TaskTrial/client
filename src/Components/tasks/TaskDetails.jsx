@@ -37,7 +37,7 @@ const TaskDetails = () => {
   const handleBack = () => {
     if (from === "Tasks") {
       navigate(`/Home/Tasks`);
-    } else {
+    } else if (from === "ProjectTasks" && projectId) {
       navigate("/Home/ProjectTasks");
     }
   };

@@ -69,8 +69,12 @@ const Teams = () => {
                 >
                   <h3 className="department-name">{team.name}</h3>
                   <p className="department-description">{team.description}</p>
-                  <p className="department-description">{team.createdAt}</p>
-                  <p className="department-description">{team.updatedAt}</p>
+                  <p className="department-description">
+                    {new Date(team.createdAt).toDateString()}
+                  </p>
+                  <p className="department-description">
+                    {new Date(team.updatedAt).toDateString()}
+                  </p>
                 </div>
               ))}
             </div>

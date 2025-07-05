@@ -22,7 +22,7 @@ export const fetchUser = async ({
     return;
   }
 
-  const userId = userData.id;
+  const userId = userData.id || localStorage.getItem("userId");
   setIsLoading(true);
 
   try {

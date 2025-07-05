@@ -51,6 +51,8 @@
 
 .dashboard-value {
   font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 5px;
 }
 
 .dashboard-status {
@@ -176,17 +178,23 @@
   background-color: #d1fae5;
   color: #065f46;
 }
-@media (max-width: 1070px) {
-  /* .project-row span:nth-of-type(1) {
+.project-row span:has(div:nth-child(2)) {
+  min-width: 110px;
+}
+.task-row span:has(div:nth-child(2)) {
+  min-width: 110px;
+}
+/* @media (max-width: 1200px) {
+   .project-row span:nth-of-type(1) {
     min-width: 110px;
-  } */
+  } 
   .project-row span:has(div:nth-child(2)) {
     min-width: 110px;
   }
   .task-row span:has(div:nth-child(2)) {
     min-width: 110px;
   }
-}
+} */
 /* ======================
      Progress Circles
   ====================== */

@@ -1,13 +1,16 @@
 import clipMessage from "../../assets/clip-message.png";
-import googlePicture from "../../assets/google.png";
 import "../Styles/Sign.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import handleGoogleLogin from "../handleGoogleLogin";
+// import googlePicture from "../../assets/google.png";
+// import handleGoogleLogin from "../handleGoogleLogin";
 import LoadingOverlay from "../LoadingOverlay";
 import Toast from "../Toast";
+import { login } from "../store/userSlice";
+import GoogleLoginButton from "../google/GoogleLoginButton";
+import { useDispatch } from "react-redux";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -15,6 +18,7 @@ function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [toast, setToast] = useState(null);
+  const dispatch = useDispatch();
 
   const handleReset = () => {
     setFormData({
@@ -53,9 +57,9 @@ function SignUp() {
   //   return `${formData.firstName}${formData.lastName}${random}`;
   // };
 
-  const logIn = () => {
-    handleGoogleLogin(setIsLoading, navigate, setToast);
-  };
+  // const logIn = () => {
+  //   handleGoogleLogin(setIsLoading, navigate, setToast);
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -163,7 +167,7 @@ function SignUp() {
             <p>See what is going on with your business</p>
           </div>
           {/* Google Button */}
-          <button
+          {/* <button
             onClick={logIn}
             className={"Signgoogle-btn"}
             // onClick={handleGoogleSignUp}
@@ -176,7 +180,24 @@ function SignUp() {
               alt="googlePicture"
             />
             {isLoading ? "Loading..." : "Continue with Google"}
-          </button>
+          </button> */}
+          <GoogleLoginButton
+            onSuccess={(result) => {
+              dispatch(login(result));
+              setToast({ message: "Logged in successfully", type: "success" });
+              localStorage.setItem("auth", "true");
+              setTimeout(() => {
+                navigate("/Home");
+              }, 1500);
+            }}
+            onError={(err) => {
+              setToast({
+                message: err.message || "Google login failed",
+                type: "error",
+              });
+            }}
+            text="Continue with Google"
+          />
           <div className="Signdivider">
             <span>----or Sign up with Email----</span>
           </div>

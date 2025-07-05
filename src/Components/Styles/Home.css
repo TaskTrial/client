@@ -26,6 +26,45 @@
 }
 .Homemain-links .Homecreate-project {
   display: flex;
+  align-items: center;
+  gap: 12px;
+  /* padding: 10px 15px; */
+  margin-left: 25px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.Homemain-links .Homecreate-project:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.Homemain-links .Homecreate-project span:first-child {
+  background-color: var(--thirdColor);
+  color: #fff;
+  font-size: 24px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.Homemain-links .Homecreate-project .plusspan {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #333;
+  white-space: nowrap;
+}
+
+/* .Homemain-links .Homecreate-project {
+  display: flex;
   padding: 5px;
   margin-left: 25px;
   margin-bottom: 15px;
@@ -42,7 +81,7 @@
 }
 .Homemain-links .Homecreate-project .plusspan {
   align-self: center;
-}
+} */
 .Homemain-links ul {
   padding: 25px;
 }

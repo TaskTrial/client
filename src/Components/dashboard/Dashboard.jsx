@@ -1,6 +1,6 @@
 import "../Styles/Dashboard.css";
-import { FaChartLine, FaTasks, FaCalendarAlt } from "react-icons/fa";
-import { MdAccessTime, MdWork } from "react-icons/md";
+import { FaTasks, FaCalendarAlt } from "react-icons/fa";
+import { MdWork } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -77,13 +77,13 @@ function Dashboard() {
           </div>
         </div>
         <div className="dashboard-overview-wrapper">
-          <div className="dashboard-card">
+          {/* <div className="dashboard-card">
             <div className="dashboard-icon">
               <FaChartLine color="#b388f0" size={24} />
             </div>
             <h3 className="dashboard-title">Total revenue</h3>
             <p className="dashboard-value">$53,00989</p>
-            {/* <p
+             <p
             className={`dashboard-status ${
               card.statusColor === "green"
                 ? "dashboard-status-up"
@@ -91,8 +91,8 @@ function Dashboard() {
             }`}
           >
             {card.status}
-          </p> */}
-          </div>
+          </p> 
+          </div> */}
           <div className="dashboard-card">
             <div className="dashboard-icon">
               <MdWork color="#f7a07a" size={24} />
@@ -119,13 +119,13 @@ function Dashboard() {
             {card.status}
           </p> */}
           </div>
-          <div className="dashboard-card">
+          {/* <div className="dashboard-card">
             <div className="dashboard-icon">
               <MdAccessTime color="#89bdfb" size={24} />
             </div>
             <h3 className="dashboard-title">Time spent</h3>
             <p className="dashboard-value">1022 /1300 Hrs</p>
-            {/* <p
+             <p
             className={`dashboard-status ${
               card.statusColor === "green"
                 ? "dashboard-status-up"
@@ -133,8 +133,8 @@ function Dashboard() {
             }`}
           >
             {card.status}
-          </p> */}
-          </div>
+          </p> 
+          </div> */}
           <div className="dashboard-card">
             <div className="dashboard-icon">
               <FaTasks color="#a88fed" size={24} />
@@ -146,7 +146,9 @@ function Dashboard() {
             <p className="dashboard-value">
               {task.statistics?.byStatus ? (
                 <>
-                  byStatus:
+                  <p style={{ fontWeight: "bold", marginBlock: "5px" }}>
+                    byStatus:
+                  </p>
                   <div className="todo">
                     todo: {task.statistics.byStatus.todo || 0}
                   </div>
@@ -167,7 +169,9 @@ function Dashboard() {
             <p className="dashboard-value">
               {task.statistics?.byPriority ? (
                 <>
-                  byPriority:
+                  <p style={{ fontWeight: "bold", marginBlock: "5px" }}>
+                    byPriority:
+                  </p>
                   <div className="completed">
                     low: {task.statistics.byPriority.low || 0}
                   </div>

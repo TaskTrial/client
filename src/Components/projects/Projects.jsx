@@ -107,7 +107,6 @@ const Projects = () => {
                     style={{ width: `${project.progress}%` }}
                   />
                 </div>
-                <span className="Projects-time">76 hours</span>
               </div>
             </div>
           ))}

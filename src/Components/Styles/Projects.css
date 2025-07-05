@@ -27,7 +27,9 @@
 .Projects-list {
   display: grid;
   gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
+
 .Projects-card {
   background-color: #fff1c1;
   padding: 20px;
@@ -114,15 +116,15 @@
   height: 100%;
   background: #ff6600;
 }
-.Projects-time {
+/* .Projects-time {
   color: blue;
   font-weight: bold;
   font-size: 0.9rem;
-}
+} */
 
 /* Responsive */
-@media screen and (max-width: 767px) {
+/* @media screen and (max-width: 767px) {
   .Projects-list {
     grid-template-columns: 1fr;
   }
-}
+} */
