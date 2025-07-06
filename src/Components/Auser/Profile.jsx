@@ -11,7 +11,7 @@ import "../Styles/Profile.css";
 import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { logout } from "../store/userSlice";
+// import { logout } from "../store/userSlice";
 import ConfirmModal from "../ConfirmModal";
 import { useState } from "react";
 import Toast from "../Toast";
@@ -31,6 +31,8 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const profilePic = userData.profilePic;
   const formatDate = (dateString) => {
+    if (!dateString) return "Invalid Date";
+
     const date = new Date(dateString);
     // const formattedDate = format(date, "yyyy-MM-dd HH:mm:ss");
     // const formattedDate = format(date, "MMM dd, yyyy");
@@ -40,6 +42,7 @@ const Profile = () => {
     const period = hours >= 12 ? "PM" : "AM";
     return `${formattedDate} ${period}`;
   };
+
   const formattedDateJonn = formatDate(userData.createdAt);
   const formattedDateUpdate = formatDate(userData.updatedAt);
   const handleEditProfile = () => {
@@ -48,9 +51,14 @@ const Profile = () => {
   const handleLogout = () => {
     setShowConfirm(true);
   };
+  // const confirmLogout = () => {
+  //   localStorage.clear();
+  //   dispatch(logout());
+  //   navigate("/SignIn");
+  // };
   const confirmLogout = () => {
     localStorage.clear();
-    dispatch(logout());
+    dispatch({ type: "RESET_APP" });
     navigate("/SignIn");
   };
 

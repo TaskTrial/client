@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { setOrganization } from "../store/organizationSlice";
 import AccessToken from "../auth/AccessToken";
 import JoinOrganizationButton from "./JoinOrganizationButton";
+
 const CreateOrganization = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [toast, setToast] = useState(null);
@@ -16,6 +17,7 @@ const CreateOrganization = () => {
   const userData = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     name: "",
     industry: "",
@@ -35,10 +37,10 @@ const CreateOrganization = () => {
     setIsLoading(true);
     const accessToken = localStorage.getItem("accessToken");
     const beforepayload = {
-      name: formData.name.toLowerCase().trim(),
-      industry: formData.industry.toLowerCase().trim(),
-      sizeRange: formData.sizeRange.toLowerCase().trim(),
-      contactEmail: formData.contactEmail.toLowerCase().trim(),
+      name: formData.name.trim(),
+      industry: formData.industry.trim(),
+      sizeRange: formData.sizeRange.trim(),
+      contactEmail: formData.contactEmail.trim(),
       orgOwnerId: formData.orgOwnerId.trim(),
     };
     const payload = Object.fromEntries(
@@ -109,94 +111,90 @@ const CreateOrganization = () => {
         />
       )}
       <div className="create-organization-container">
-        <header
-          className="create-organization-header"
-          onClick={() => {
-            if (window.innerWidth > 768) {
-              navigate("/Home");
-            } else {
-              navigate("/Home/More");
-            }
-          }}
-        >
-          <FaArrowLeft className="create-organization-back-icon" />
-          <h6 className="create-organization-title">back to more</h6>
-        </header>
-        <h2 style={{ color: "#333333", textAlign: "center" }}>
-          Create Organization
-        </h2>
-        <form className="create-organization-form" onSubmit={handleSubmit}>
-          <label>
-            Organization Name
-            <input
-              type="text"
-              name="name"
-              placeholder="Ex: ABC Inc."
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </label>
+        <div className="create-organization-form-wrapper">
+          <header style={{ cursor: "not-allowed", opacity: 0.5 }}>
+            <FaArrowLeft className="create-organization-back-icon" />
+            <h6 className="create-organization-title">
+              Please complete creation
+            </h6>
+          </header>
 
-          <label>
-            Industry
-            <input
-              type="text"
-              name="industry"
-              placeholder="Ex: Software"
-              value={formData.industry}
-              onChange={handleChange}
-              required
-            />
-          </label>
-
-          <label>
-            Size Range
-            <select
-              name="sizeRange"
-              value={formData.sizeRange}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Size Range</option>
-              <option value="1-10">1-10</option>
-              <option value="11-50">11-50</option>
-              <option value="51-200">51-200</option>
-              <option value="201-500">201-500</option>
-              <option value="501-1000">501-1000</option>
-              <option value="1000+">1000+</option>
-            </select>
-          </label>
-
-          <label>
-            Contact Email
-            <input
-              type="email"
-              name="contactEmail"
-              placeholder="Enter your contact email"
-              value={formData.contactEmail}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            orgOwnerId
-            <input
-              type="text"
-              name="orgOwnerId"
-              placeholder="Enter your orgOwnerId"
-              value={formData.orgOwnerId}
-              onChange={handleChange}
-            />
-          </label>
-
-          <button type="submit" className="create-organization-button">
+          <h2 style={{ color: "#333333", textAlign: "center" }}>
             Create Organization
-          </button>
-        </form>
-        <JoinOrganizationButton
-          setToast={setToast}
-          setIsLoading={setIsLoading}
-        />
+          </h2>
+          <form className="create-organization-form" onSubmit={handleSubmit}>
+            <label>
+              Organization Name
+              <input
+                type="text"
+                name="name"
+                placeholder="Ex: ABC Inc."
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </label>
+
+            <label>
+              Industry
+              <input
+                type="text"
+                name="industry"
+                placeholder="Ex: Software"
+                value={formData.industry}
+                onChange={handleChange}
+                required
+              />
+            </label>
+
+            <label>
+              Size Range
+              <select
+                name="sizeRange"
+                value={formData.sizeRange}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Size Range</option>
+                <option value="1-10">1-10</option>
+                <option value="11-50">11-50</option>
+                <option value="51-200">51-200</option>
+                <option value="201-500">201-500</option>
+                <option value="501-1000">501-1000</option>
+                <option value="1000+">1000+</option>
+              </select>
+            </label>
+
+            <label>
+              Contact Email
+              <input
+                type="email"
+                name="contactEmail"
+                placeholder="Enter your contact email"
+                value={formData.contactEmail}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              orgOwnerId
+              <input
+                type="text"
+                name="orgOwnerId"
+                placeholder="Enter your orgOwnerId"
+                value={formData.orgOwnerId}
+                onChange={handleChange}
+              />
+            </label>
+
+            <button type="submit" className="create-organization-button">
+              Create Organization
+            </button>
+          </form>
+          <JoinOrganizationButton
+            setToast={setToast}
+            setIsLoading={setIsLoading}
+          />
+        </div>
       </div>
     </>
   );

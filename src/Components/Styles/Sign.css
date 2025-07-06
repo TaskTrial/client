@@ -4,6 +4,7 @@
   min-height: 100vh;
   width: 100%;
 }
+
 a {
   font-size: 1rem;
 }
@@ -47,12 +48,12 @@ input.SignShow {
 } */
 .Signview {
   background-color: var(--secondColor);
-  padding: 50px;
+  padding: 30px;
   overflow-y: hidden;
 }
 .Signview .Signcontent {
   text-align: center;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 1.5;
 }
 .Signview .Signimage {

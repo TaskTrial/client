@@ -35,6 +35,7 @@ function Dashboard() {
 
     getProjects();
   }, [dispatch, navigate, userData]);
+
   useEffect(() => {
     fetchTasks({
       userData,
@@ -44,6 +45,7 @@ function Dashboard() {
       navigate,
     });
   }, [dispatch, userData, navigate]);
+
   return (
     <>
       <LoadingOverlay isLoading={isLoading} />

@@ -22,9 +22,9 @@ export const fetchUser = async ({
     return;
   }
 
-  const userId = userData.id || localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId") || userData.id;
   setIsLoading(true);
-
+  console.log(userId, "tgtyhyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
   try {
     const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
       method: "GET",
@@ -38,6 +38,7 @@ export const fetchUser = async ({
 
     if (response.status === 200) {
       localStorage.setItem("getUser", JSON.stringify(data.user));
+      localStorage.setItem("orgId", data.user.organization.id);
       dispatch(
         getUser({
           user: {

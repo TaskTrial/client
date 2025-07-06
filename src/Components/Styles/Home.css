@@ -88,6 +88,11 @@
 .Homemain-links ul li {
   margin-bottom: 15px;
 }
+
+.Homemain-links ul li.logout span {
+  color: #fff;
+  cursor: pointer;
+}
 .Homemain-links ul li.Homeactive {
   background-color: #fff;
   border-radius: 10px;

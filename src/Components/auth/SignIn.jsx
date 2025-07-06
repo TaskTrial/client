@@ -180,7 +180,10 @@ function SignIn() {
           <GoogleLoginButton
             onSuccess={(result) => {
               dispatch(login(result));
-              setToast({ message: "Logged in successfully", type: "success" });
+              setToast({
+                message: "Logged in successfully",
+                type: "success",
+              });
               localStorage.setItem("auth", "true");
               setTimeout(() => {
                 navigate("/Home");

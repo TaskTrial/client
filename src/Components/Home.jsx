@@ -4,7 +4,7 @@ import { MdApps } from "react-icons/md";
 import { MdWorkOutline } from "react-icons/md";
 import { MdChecklist } from "react-icons/md";
 import { MdMoreHoriz } from "react-icons/md";
-import { FaUniversity } from "react-icons/fa";
+import { FaUniversity, FaSignOutAlt } from "react-icons/fa";
 ///////////hooks////////=>:
 import { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -13,6 +13,8 @@ import LoadingOverlay from "./LoadingOverlay";
 import { fetchUser } from "./Auser/fetchUser";
 import { fetchOrganization } from "./organization/fetchOrganization";
 import { getOrganizationStatus } from "./organization/getOrganizationStatus";
+import ConfirmModal from "./ConfirmModal";
+
 ////////////////
 // import { MdCategory } from "react-icons/md"; // Material Design
 import { FaSitemap } from "react-icons/fa"; // FontAwesome
@@ -49,6 +51,8 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
   // const storedStatus = localStorage.getItem("isSidebarOpen") || "true";
   // const [isSidebarOpen, setIsSidebarOpen] = useState(storedStatus);
   // useEffect(() => {
@@ -57,6 +61,15 @@ function Home() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  const handleLogout = () => {
+    setShowConfirm(true);
+  };
+  const confirmLogout = () => {
+    localStorage.clear();
+    dispatch({ type: "RESET_APP" });
+    navigate("/SignIn");
+  };
+
   // const hasFetched = useRef(false);
   // useEffect(() => {
   //   if (!userId) {
@@ -81,15 +94,6 @@ function Home() {
 
       const fetchData = async () => {
         try {
-          await fetchUser({
-            userData,
-            dispatch,
-            navigate,
-            setToast,
-            setIsLoading,
-          });
-          // await fetchUser();
-          // const orgId = JSON.parse(localStorage.getItem("getUser"))?.organization?.id;
           const orgId = await getOrganizationStatus({
             userData,
             dispatch,
@@ -114,6 +118,15 @@ function Home() {
               return;
             }
           }
+          await fetchUser({
+            userData,
+            dispatch,
+            navigate,
+            setToast,
+            setIsLoading,
+          });
+          // await fetchUser();
+          // const orgId = JSON.parse(localStorage.getItem("getUser"))?.organization?.id;
 
           // await fetchThirdThing();
         } catch (error) {
@@ -128,6 +141,13 @@ function Home() {
   return (
     <>
       <LoadingOverlay isLoading={isLoading} />
+      {showConfirm && (
+        <ConfirmModal
+          message="Are you sure you want to log out?"
+          onConfirm={confirmLogout}
+          onCancel={() => setShowConfirm(false)}
+        />
+      )}
       {toast && (
         <Toast
           message={toast.message}
@@ -156,7 +176,7 @@ function Home() {
             onClick={() => setShowModal(true)}
           >
             <span>+</span>
-            <span className="plusspan">create new org,project,....</span>
+            <span className="plusspan">create new team,project,....</span>
           </div>
           <ul>
             <li
@@ -212,6 +232,15 @@ function Home() {
                 <span>Chat</span>
               </Link>
             </li> */}
+
+            <li className="logout" onClick={handleLogout}>
+              <FaSignOutAlt
+                size={18}
+                color="white"
+                style={{ marginBlock: "0 -4px" }}
+              />
+              <span>Logout</span>
+            </li>
             <li
               className={`showMore ${
                 currentPath === "/Home/More" ? "Homeactive" : ""
