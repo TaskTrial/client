@@ -32,19 +32,18 @@ function Dashboard() {
         setIsLoading,
       });
     };
-
+    const getTasks = async () => {
+      await fetchTasks({
+        userData,
+        setToast,
+        setIsLoading,
+        dispatch,
+        navigate,
+      });
+    };
     getProjects();
+    getTasks();
   }, [dispatch, navigate, userData]);
-
-  useEffect(() => {
-    fetchTasks({
-      userData,
-      setToast,
-      setIsLoading,
-      dispatch,
-      navigate,
-    });
-  }, [dispatch, userData, navigate]);
 
   return (
     <>

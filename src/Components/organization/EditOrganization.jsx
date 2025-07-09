@@ -122,7 +122,7 @@ const EditOrganization = () => {
     }
   };
   const backToHome = () => {
-    navigate("/Home/Organization");
+    navigate("/Home");
   };
   return (
     <div className="editOrganization-container">

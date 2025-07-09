@@ -13,7 +13,8 @@ export const fetchTeamDetails = async ({
   // onSuccess = () => {},
 }) => {
   const Access = localStorage.getItem("accessToken");
-  const orgId = await userData.organization?.id;
+  const orgId =
+    localStorage.getItem("orgId") || (await userData.organization?.id);
 
   if (!Access || !orgId || !teamId) {
     setToast({

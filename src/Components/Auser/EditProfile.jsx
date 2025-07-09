@@ -103,7 +103,7 @@ const EditProfile = () => {
     }
   };
   const backToProfile = () => {
-    navigate("/Home/Profile");
+    navigate("/Home");
   };
   return (
     <div className="editProfile-container">

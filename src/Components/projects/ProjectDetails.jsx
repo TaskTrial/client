@@ -19,15 +19,16 @@ const ProjectDetails = () => {
   const project = useSelector((state) => state.project);
   const [toast, setToast] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const teamId = useMemo(() => location.state?.teamId, [location.state]);
-  const from = location.state?.from;
+  const teamId = useMemo(() => location?.state?.teamId, [location.state]);
+  const projectId2 = location?.state?.projectId;
+  // const from = location.state?.from;
   console.log(project.members, "members");
   console.log(project.tasks, "tasks");
   useEffect(() => {
     const getProject = async () => {
       await fetchProjectDetails({
         userData,
-        projectId,
+        projectId: projectId || projectId2,
         teamId,
         setToast,
         setIsLoading,
@@ -37,13 +38,18 @@ const ProjectDetails = () => {
     };
 
     getProject();
-  }, [projectId, dispatch, navigate, userData, teamId]);
+  }, [projectId, dispatch, navigate, userData, teamId, projectId2]);
   const handleBack = () => {
-    if (from === "TeamProjects" && teamId) {
-      navigate(`/Home/TeamProjects`);
-    } else {
-      navigate("/Home/Projects");
-    }
+    // if (from === "TeamProjects" && teamId) {
+    //   navigate(`/Home/TeamProjects`);
+    // } else {
+    //   navigate("/Home/Projects");
+    // }
+    navigate("/Home/TeamProjects", {
+      state: {
+        teamId: teamId,
+      },
+    });
   };
 
   return (

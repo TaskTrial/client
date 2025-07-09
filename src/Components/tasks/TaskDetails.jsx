@@ -19,7 +19,7 @@ const TaskDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const task = useSelector((state) => state.task);
   const userData = useSelector((state) => state.userData);
-  const from = location.state?.from;
+  // const from = location.state?.from;
 
   useEffect(() => {
     if (!taskId || !projectId || !teamId) return;
@@ -35,11 +35,18 @@ const TaskDetails = () => {
     });
   }, [taskId, projectId, teamId, navigate, dispatch, userData]);
   const handleBack = () => {
-    if (from === "Tasks") {
-      navigate(`/Home/Tasks`);
-    } else if (from === "ProjectTasks" && projectId) {
-      navigate("/Home/ProjectTasks");
-    }
+    // if (from === "Tasks") {
+    //   navigate(`/Home/Tasks`);
+    // } else if (from === "ProjectTasks" && projectId) {
+    //   navigate("/Home/ProjectTasks");
+    // }
+
+    navigate("/Home/ProjectTasks", {
+      state: {
+        projectId: projectId,
+        teamId: teamId,
+      },
+    });
   };
   return (
     <>
@@ -63,6 +70,8 @@ const TaskDetails = () => {
           <p className="task-description">{task.description}</p>
 
           <div className="task-info-group">
+            <p>projectId: {projectId}</p>
+            <p>teamId: {teamId}</p>
             <p>
               <strong>Status:</strong> {task.status.replace("_", " ")}
             </p>
@@ -119,9 +128,9 @@ const TaskDetails = () => {
             onClick={() =>
               navigate(`/Home/Tasks/${taskId}/EditTask`, {
                 state: {
-                  taskId,
-                  projectId,
-                  teamId,
+                  taskId: taskId,
+                  projectId: projectId,
+                  teamId: teamId,
                 },
               })
             }

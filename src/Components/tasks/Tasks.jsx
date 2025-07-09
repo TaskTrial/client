@@ -88,14 +88,14 @@ const Tasks = () => {
           ))}
         </div>
 
-        <div className="Tasks-list">
+        {/* <div className="Tasks-list">
           {filteredTasks.map((task) => (
             <div
               onClick={() => {
                 navigate(`/Home/Tasks/${task.id}`, {
                   state: {
                     from: "Tasks",
-                    teamId: task.team?.id,
+                    teamId: task.team.id,
                     projectId: task.project.id,
                   },
                 });
@@ -128,6 +128,166 @@ const Tasks = () => {
               </div>
             </div>
           ))}
+        </div> */}
+        {/* modify */}
+        {/* <div className="Tasks-list">
+          {["TODO", "IN_PROGRESS", "REVIEW", "DONE"].map((status) => (
+            <div key={status} className={`Tasks-column ${status}`}>
+              <h3>
+                {status
+                  .replace("IN_PROGRESS", "In Progress")
+                  .replace("REVIEW", "In Review")
+                  .replace("TODO", "To Do")
+                  .replace("DONE", "Completed")}
+              </h3>
+              {tasks
+                .filter((t) => t.status === status)
+                .map((task) => (
+                  <div
+                    onClick={() => {
+                      navigate(`/Home/Tasks/${task.id}`, {
+                        state: {
+                          from: "Tasks",
+                          teamId: task.team.id,
+                          projectId: task.project.id,
+                        },
+                      });
+                    }}
+                    className="Tasks-card"
+                    key={task.id}
+                  >
+                    <span
+                      className="Tasks-dot"
+                      style={{ backgroundColor: statusColors[task.status] }}
+                    />
+                    <div className="Tasks-card-body">
+                      <h3 className="Tasks-name">{task.title}</h3>
+                      <p className="Tasks-info">
+                        <FaCalendarAlt />
+                        {new Date(task.dueDate).toLocaleDateString()}
+                      </p>
+                      <p className="Tasks-info">team name:{task.team?.name}</p>
+                      <p className="Tasks-info">
+                        project name:{task.project.name}
+                      </p>
+                    </div>
+                    <div className="Tasks-info">
+                      <div>
+                        <p>Est.Time:{task.estimatedTime}</p>
+                        <p>Time Left:{task.timeRemaining}</p>
+                        <p>{task.priority}</p>
+                      </div>
+                    </div>
+                    <div className="Tasks-card-users">
+                      <FaUsers />
+                    </div>
+                  </div>
+                ))}
+            </div>
+          ))}
+        </div> */}
+        {/* modify2 */}
+        <div className="Tasks-list">
+          <div className="Tasks-mobile-view">
+            {filteredTasks.map((task) => (
+              <div
+                onClick={() => {
+                  navigate(`/Home/Tasks/${task.id}`, {
+                    state: {
+                      from: "Tasks",
+                      teamId: task.team.id,
+                      projectId: task.project.id,
+                    },
+                  });
+                }}
+                className="Tasks-card"
+                key={task.id}
+              >
+                <span
+                  className="Tasks-dot"
+                  style={{ backgroundColor: statusColors[task.status] }}
+                />
+                <div className="Tasks-card-body">
+                  <h3 className="Tasks-name">{task.title}</h3>
+                  <p className="Tasks-info">
+                    <FaCalendarAlt />
+                    {new Date(task.dueDate).toLocaleDateString()}
+                  </p>
+                  <p className="Tasks-info">team name:{task.team?.name}</p>
+                  <p className="Tasks-info">project name:{task.project.name}</p>
+                </div>
+                <div className="Tasks-info">
+                  <div>
+                    <p>Est.Time:{task.estimatedTime}</p>
+                    <p>Time Left:{task.timeRemaining}</p>
+                    <p>{task.priority}</p>
+                  </div>
+                </div>
+                <div className="Tasks-card-users">
+                  <FaUsers />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="Tasks-desktop-view">
+            {["TODO", "IN_PROGRESS", "REVIEW", "DONE"].map((status) => (
+              <div key={status} className={`Tasks-column ${status}`}>
+                <h3>
+                  {status
+                    .replace("IN_PROGRESS", "In Progress")
+                    .replace("REVIEW", "In Review")
+                    .replace("TODO", "To Do")
+                    .replace("DONE", "Completed")}
+                </h3>
+                {tasks
+                  .filter((t) => t.status === status)
+                  .map((task) => (
+                    <div
+                      onClick={() => {
+                        navigate(`/Home/Tasks/${task.id}`, {
+                          state: {
+                            from: "Tasks",
+                            teamId: task.team.id,
+                            projectId: task.project.id,
+                          },
+                        });
+                      }}
+                      className="Tasks-card"
+                      key={task.id}
+                    >
+                      <span
+                        className="Tasks-dot"
+                        style={{ backgroundColor: statusColors[task.status] }}
+                      />
+                      <div className="Tasks-card-body">
+                        <h3 className="Tasks-name">{task.title}</h3>
+                        <p className="Tasks-info">
+                          <FaCalendarAlt />
+                          {new Date(task.dueDate).toLocaleDateString()}
+                        </p>
+                        <p className="Tasks-info">
+                          team name:{task.team?.name}
+                        </p>
+                        <p className="Tasks-info">
+                          project name:{task.project.name}
+                        </p>
+                      </div>
+                      <div className="Tasks-info">
+                        <div>
+                          <p>Est.Time:{task.estimatedTime}</p>
+                          <p>Time Left:{task.timeRemaining}</p>
+                          <p>{task.priority}</p>
+                        </div>
+                      </div>
+                      <div className="Tasks-card-users">
+                        <FaUsers />
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>

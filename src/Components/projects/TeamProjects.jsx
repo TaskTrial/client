@@ -17,10 +17,7 @@ const TeamProjects = () => {
   const [isLoading, setIsLoading] = useState(false);
   const projects = useSelector((state) => state.project.projects);
   const userData = useSelector((state) => state.user);
-  const teamId = useMemo(
-    () => location.state?.teamId || localStorage.getItem("teamId"),
-    [location.state]
-  );
+  const teamId = useMemo(() => location?.state?.teamId, [location.state]);
   useEffect(() => {
     fetchTeamProjects({
       teamId,

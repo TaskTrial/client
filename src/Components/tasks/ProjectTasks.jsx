@@ -26,8 +26,8 @@ const ProjectTasks = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [filterStatus, setFilterStatus] = useState("ALL");
 
-  const projectId = location.state?.projectId;
-  const teamId = location.state?.teamId;
+  const projectId = location?.state?.projectId;
+  const teamId = location?.state?.teamId;
 
   useEffect(() => {
     if (!projectId || !teamId) return;
@@ -46,7 +46,14 @@ const ProjectTasks = () => {
     filterStatus === "ALL"
       ? tasks
       : tasks.filter((t) => t.status === filterStatus);
-
+  const handleBack = () => {
+    navigate(`/Home/Projects/${projectId}`, {
+      state: {
+        projectId: projectId,
+        teamId: teamId,
+      },
+    });
+  };
   return (
     <>
       <LoadingOverlay isLoading={isLoading} />
@@ -59,10 +66,7 @@ const ProjectTasks = () => {
       )}
 
       <div className="Tasks-container">
-        <header
-          className="Tasks-header"
-          onClick={() => navigate(`/Home/Projects/${projectId}`)}
-        >
+        <header className="Tasks-header" onClick={handleBack}>
           <FaArrowLeft className="Tasks-back-icon" />
           <h6>Back</h6>
         </header>
@@ -98,7 +102,7 @@ const ProjectTasks = () => {
           ))}
         </div>
 
-        <div className="Tasks-list">
+        {/* <div className="Tasks-list">
           {filteredTasks.map((task) => (
             <div
               style={{ cursor: "pointer" }}
@@ -107,7 +111,7 @@ const ProjectTasks = () => {
                   state: {
                     from: "ProjectTasks",
                     teamId: teamId,
-                    projectId: task.projectId,
+                    projectId: projectId,
                   },
                 });
               }}
@@ -127,7 +131,8 @@ const ProjectTasks = () => {
               </div>
               <div className="Tasks-info">
                 <div>
-                  <p>projectId: {task.projectId}</p>
+                  <p>projectId: {projectId}</p>
+                  <p>teamId: {teamId}</p>
                   <p>taskId: {task.id}</p>
                   <p>Est. Time: {task.estimatedTime}</p>
                   <p>actualTime: {task.actualTime}</p>
@@ -139,6 +144,109 @@ const ProjectTasks = () => {
               </div>
             </div>
           ))}
+        </div> */}
+        {/* modify2 */}
+        <div className="Tasks-list">
+          <div className="Tasks-mobile-view">
+            {filteredTasks.map((task) => (
+              <div
+                onClick={() => {
+                  navigate(`/Home/Tasks/${task.id}`, {
+                    state: {
+                      from: "Tasks",
+                      teamId: task.team.id,
+                      projectId: task.project.id,
+                    },
+                  });
+                }}
+                className="Tasks-card"
+                key={task.id}
+              >
+                <span
+                  className="Tasks-dot"
+                  style={{ backgroundColor: statusColors[task.status] }}
+                />
+                <div className="Tasks-card-body">
+                  <h3 className="Tasks-name">{task.title}</h3>
+                  <p className="Tasks-info">
+                    <FaCalendarAlt />
+                    {new Date(task.dueDate).toLocaleDateString()}
+                  </p>
+                  <p className="Tasks-info">team name:{task.team?.name}</p>
+                  <p className="Tasks-info">project name:{task.project.name}</p>
+                </div>
+                <div className="Tasks-info">
+                  <div>
+                    <p>Est.Time:{task.estimatedTime}</p>
+                    <p>Time Left:{task.timeRemaining}</p>
+                    <p>{task.priority}</p>
+                  </div>
+                </div>
+                <div className="Tasks-card-users">
+                  <FaUsers />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="Tasks-desktop-view">
+            {["TODO", "IN_PROGRESS", "REVIEW", "DONE"].map((status) => (
+              <div key={status} className={`Tasks-column ${status}`}>
+                <h3>
+                  {status
+                    .replace("IN_PROGRESS", "In Progress")
+                    .replace("REVIEW", "In Review")
+                    .replace("TODO", "To Do")
+                    .replace("DONE", "Completed")}
+                </h3>
+                {tasks
+                  .filter((t) => t.status === status)
+                  .map((task) => (
+                    <div
+                      onClick={() => {
+                        navigate(`/Home/Tasks/${task.id}`, {
+                          state: {
+                            from: "Tasks",
+                            teamId: task.team.id,
+                            projectId: task.project.id,
+                          },
+                        });
+                      }}
+                      className="Tasks-card"
+                      key={task.id}
+                    >
+                      <span
+                        className="Tasks-dot"
+                        style={{ backgroundColor: statusColors[task.status] }}
+                      />
+                      <div className="Tasks-card-body">
+                        <h3 className="Tasks-name">{task.title}</h3>
+                        <p className="Tasks-info">
+                          <FaCalendarAlt />
+                          {new Date(task.dueDate).toLocaleDateString()}
+                        </p>
+                        <p className="Tasks-info">
+                          team name:{task.team?.name}
+                        </p>
+                        <p className="Tasks-info">
+                          project name:{task.project.name}
+                        </p>
+                      </div>
+                      <div className="Tasks-info">
+                        <div>
+                          <p>Est.Time:{task.estimatedTime}</p>
+                          <p>Time Left:{task.timeRemaining}</p>
+                          <p>{task.priority}</p>
+                        </div>
+                      </div>
+                      <div className="Tasks-card-users">
+                        <FaUsers />
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
