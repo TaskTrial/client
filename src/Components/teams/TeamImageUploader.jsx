@@ -21,6 +21,7 @@ const TeamImageUploader = ({ profilePicFromApi, setToast, setIsLoading }) => {
       const isSvg = file.type === "image/svg+xml" || (file.name && file.name.toLowerCase().endsWith(".svg"));
       if (isSvg) {
         setToast({ message: "SVG files are not allowed for security reasons.", type: "error" });
+        e.target.value = '';
         return;
       }
       setSelectedFile(file);
