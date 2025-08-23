@@ -21,6 +21,10 @@ const OrganizationImageUploader = ({
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (!file.type.startsWith("image/")) {
+        setToast({ message: "Only image files are allowed.", type: "error" });
+        return;
+      }
       setSelectedFile(file);
       setPreviewImage(URL.createObjectURL(file));
     }
