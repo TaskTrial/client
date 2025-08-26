@@ -142,9 +142,22 @@ const ProfileImageUploader = ({
 
   const imageToDisplay = previewImage || currentPic;
 
+  // Helper function to check for safe image URLs
+  function isSafeImageSrc(src) {
+    if (!src || typeof src !== "string") return false;
+    // Allow blob URLs
+    if (src.startsWith("blob:")) return true;
+    // Allow data URLs only for images
+    if (src.startsWith("data:image/")) return true;
+    // Allow http or https URLs with common image extensions
+    if (/^https?:\/\/.+\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i.test(src)) return true;
+    // Reject all others for safety
+    return false;
+  }
+
   return (
     <div className="editProfile-avatar-section">
-      {imageToDisplay ? (
+      {isSafeImageSrc(imageToDisplay) ? (
         <img
           src={imageToDisplay}
           alt="Profile"
