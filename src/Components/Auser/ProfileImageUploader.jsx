@@ -22,6 +22,18 @@ const ProfileImageUploader = ({
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Block SVG files (extra defense)
+      if (
+        file.type === "image/svg+xml" ||
+        (file.name && file.name.toLowerCase().endsWith(".svg"))
+      ) {
+        setToast &&
+          setToast({
+            type: "error",
+            message: "SVG images are not allowed for profile pictures.",
+          });
+        return;
+      }
       setSelectedFile(file);
       setPreviewImage(URL.createObjectURL(file));
     }
@@ -142,15 +154,17 @@ const ProfileImageUploader = ({
 
   const imageToDisplay = previewImage || currentPic;
 
-  // Helper function to check for safe image URLs
+  // Helper function to check for safe image URLs (block SVG)
   function isSafeImageSrc(src) {
     if (!src || typeof src !== "string") return false;
-    // Allow blob URLs
+    // Block SVG images for security reasons (SVG can contain script)
+    if (src.endsWith('.svg') || src.toLowerCase().includes('image/svg+xml')) return false;
+    // Allow blob URLs (non-svg checked above)
     if (src.startsWith("blob:")) return true;
-    // Allow data URLs only for images
-    if (src.startsWith("data:image/")) return true;
-    // Allow http or https URLs with common image extensions
-    if (/^https?:\/\/.+\.(jpg|jpeg|png|gif|bmp|webp|svg)$/i.test(src)) return true;
+    // Allow data URLs only for images except SVG
+    if (/^data:image\/(?!svg\+xml)[a-z0-9.+-]+/i.test(src)) return true;
+    // Allow http or https URLs with common image extensions (except svg)
+    if (/^https?:\/\/.+\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(src)) return true;
     // Reject all others for safety
     return false;
   }
