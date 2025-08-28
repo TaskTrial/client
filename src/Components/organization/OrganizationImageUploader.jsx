@@ -145,7 +145,23 @@ const OrganizationImageUploader = ({
     }
   };
 
-  const imageToDisplay = previewImage || currentPic;
+  // Accept only blob URLs (for preview) or trusted static URLs (from backend)
+  const isValidImageUrl = (url) => {
+    if (!url || typeof url !== "string") return false;
+    // Accept blob/object URLs created by the browser
+    if (url.startsWith("blob:")) return true;
+    // Accept URLs from trusted backends (adjust regex or domains as appropriate)
+    if (
+      url.startsWith("http://localhost:3000/") ||
+      url.startsWith("https://localhost:3000/") ||
+      url.startsWith("https://your-trusted-cdn.com/") // Add more trusted image origins
+    )
+      return true;
+    return false;
+  };
+
+  const rawImage = previewImage || currentPic;
+  const imageToDisplay = isValidImageUrl(rawImage) ? rawImage : null;
 
   return (
     <div className="editProfile-avatar-section">
