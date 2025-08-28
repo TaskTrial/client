@@ -25,8 +25,27 @@ const OrganizationImageUploader = ({
         setToast({ message: "Only image files are allowed.", type: "error" });
         return;
       }
-      setSelectedFile(file);
-      setPreviewImage(URL.createObjectURL(file));
+      // Further check file header to ensure it's really an image (extra safety)
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const arr = new Uint8Array(reader.result).subarray(0, 4);
+        let header = "";
+        for (let i = 0; i < arr.length; i++) {
+          header += arr[i].toString(16);
+        }
+        // Check PNG/JPEG/GIF magic numbers
+        const isImageFile =
+          header === "89504e47" || // PNG
+          header === "ffd8ffe0" || header === "ffd8ffe1" || header === "ffd8ffe2" || // JPEG
+          header === "47494638"; // GIF
+        if (!isImageFile) {
+          setToast({ message: "Selected file is not a valid image.", type: "error" });
+          return;
+        }
+        setSelectedFile(file);
+        setPreviewImage(URL.createObjectURL(file));
+      };
+      reader.readAsArrayBuffer(file);
     }
   };
 
@@ -150,11 +169,12 @@ const OrganizationImageUploader = ({
     if (!url || typeof url !== "string") return false;
     // Accept blob/object URLs created by the browser
     if (url.startsWith("blob:")) return true;
-    // Accept URLs from trusted backends (adjust regex or domains as appropriate)
+    // Accept URLs served from explicit trusted backends + content type/image extensions
     if (
-      url.startsWith("http://localhost:3000/") ||
-      url.startsWith("https://localhost:3000/") ||
-      url.startsWith("https://your-trusted-cdn.com/") // Add more trusted image origins
+      (url.startsWith("http://localhost:3000/") ||
+        url.startsWith("https://localhost:3000/") ||
+        url.startsWith("https://your-trusted-cdn.com/")) &&
+      /\.(png|jpe?g|gif|webp)$/i.test(url)
     )
       return true;
     return false;
