@@ -22,15 +22,22 @@ const ProfileImageUploader = ({
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Block SVG files (extra defense)
+      // Only allow safe image MIME types (extra defense)
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/bmp",
+        "image/webp"
+      ];
       if (
-        file.type === "image/svg+xml" ||
+        !allowedTypes.includes(file.type) ||
         (file.name && file.name.toLowerCase().endsWith(".svg"))
       ) {
         setToast &&
           setToast({
             type: "error",
-            message: "SVG images are not allowed for profile pictures.",
+            message: "Only JPEG, PNG, GIF, BMP, or WEBP images are allowed for profile pictures.",
           });
         return;
       }
@@ -158,17 +165,23 @@ const ProfileImageUploader = ({
   function isSafeImageSrc(src) {
     if (!src || typeof src !== "string") return false;
     // Block SVG images for security reasons (SVG can contain script)
-    if (src.endsWith('.svg') || src.toLowerCase().includes('image/svg+xml')) return false;
-    // Allow blob URLs (non-svg checked above)
+    if (
+      src.endsWith('.svg') ||
+      src.toLowerCase().includes('image/svg+xml') ||
+      src.toLowerCase().includes('svg%3') // Encoded SVG
+    ) return false;
+    // Allow blob URLs -- checked above for SVG
     if (src.startsWith("blob:")) return true;
-    // Allow data URLs only for images except SVG
-    if (/^data:image\/(?!svg\+xml)[a-z0-9.+-]+/i.test(src)) return true;
+    // Allow data URLs for safe image types only (jpeg, png, gif, bmp, webp)
+    if (/^data:image\/(jpeg|png|gif|bmp|webp);base64,/i.test(src)) return true;
     // Allow http or https URLs with common image extensions (except svg)
     if (/^https?:\/\/.+\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(src)) return true;
     // Reject all others for safety
     return false;
   }
 
+          referrerPolicy="no-referrer"
+          crossOrigin="anonymous"
   return (
     <div className="editProfile-avatar-section">
       {isSafeImageSrc(imageToDisplay) ? (
