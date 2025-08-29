@@ -30,10 +30,18 @@ const ProfileImageUploader = ({
         "image/bmp",
         "image/webp"
       ];
+      // Check for allowed types, and block SVG in type, ext, or mimetype (double check)
+      const isSvgType = (file.type && file.type.toLowerCase().includes("svg"));
+      const isSvgExt = (file.name && file.name.toLowerCase().endsWith(".svg"));
+      const isSvgMime = (file.type && file.type.toLowerCase().includes("image/svg+xml"));
       if (
         !allowedTypes.includes(file.type) ||
-        (file.name && file.name.toLowerCase().endsWith(".svg"))
+        isSvgType ||
+        isSvgExt ||
+        isSvgMime
       ) {
+        setSelectedFile(null);
+        setPreviewImage(null);
         setToast &&
           setToast({
             type: "error",
@@ -186,6 +194,8 @@ const ProfileImageUploader = ({
     <div className="editProfile-avatar-section">
       {isSafeImageSrc(imageToDisplay) ? (
         <img
+          referrerPolicy="no-referrer"
+          crossOrigin="anonymous"
           src={imageToDisplay}
           alt="Profile"
           className="editProfile-avatar"
