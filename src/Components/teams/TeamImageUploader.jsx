@@ -17,25 +17,24 @@ const TeamImageUploader = ({ profilePicFromApi, setToast, setIsLoading }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Block SVG files for security, including by scanning contents for '<svg'
+      // Only allow certain safe image types (no SVG!)
+      const allowedImageTypes = [
+        "image/png",
+        "image/jpeg",
+        "image/gif",
+        "image/webp",
+        // Add more safe image MIME types as needed
+      ];
+      // Block SVG: by mime type, extension, and generic sniffing
       const isSvgType = file.type === "image/svg+xml" || (file.name && file.name.toLowerCase().endsWith(".svg"));
-      const reader = new FileReader();
-      reader.onload = function(ev) {
-        const content = ev.target.result;
-        // Scan for <svg opening tag in the file's text content
-        if (isSvgType || (typeof content === 'string' && content.trim().toLowerCase().startsWith('<svg'))) {
-          setToast({ message: "SVG files are not allowed for security reasons.", type: "error" });
-          e.target.value = '';
-          return;
-        }
-        setSelectedFile(file);
-        setPreviewImage(URL.createObjectURL(file));
-      };
-      
-      // Only read as text if the file is small (images often are), otherwise fallback or skip for larger files
-      // Read first kilobyte for inspection without heavy cost
-      const blob = file.slice(0, 1024);
-      reader.readAsText(blob);
+      if (isSvgType || !allowedImageTypes.includes(file.type)) {
+        setToast({ message: "Only PNG, JPEG, GIF, or WEBP images are allowed. SVG files are not accepted for security reasons.", type: "error" });
+        e.target.value = '';
+        return;
+      }
+      // Optionally add more magic number checking here if extra defense is needed
+      setSelectedFile(file);
+      setPreviewImage(URL.createObjectURL(file));
     }
   };
 
