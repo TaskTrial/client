@@ -21,8 +21,16 @@ const OrganizationImageUploader = ({
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (!file.type.startsWith("image/")) {
-        setToast({ message: "Only image files are allowed.", type: "error" });
+      // Disallow SVG files by mime type or extension
+      const allowedMimeTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp"];
+      const fileName = file.name || "";
+      const ext = fileName.split('.').pop().toLowerCase();
+      if (file.type === "image/svg+xml" || ext === "svg") {
+        setToast({ message: "SVG images are not allowed for security reasons.", type: "error" });
+        return;
+      }
+      if (!file.type.startsWith("image/") || !allowedMimeTypes.includes(file.type)) {
+        setToast({ message: "Only PNG, JPEG, JPG, GIF, or WEBP image files are allowed.", type: "error" });
         return;
       }
       // Further check file header to ensure it's really an image (extra safety)
@@ -33,7 +41,7 @@ const OrganizationImageUploader = ({
         for (let i = 0; i < arr.length; i++) {
           header += arr[i].toString(16);
         }
-        // Check PNG/JPEG/GIF magic numbers
+        // Check PNG/JPEG/GIF magic numbers (DISABLE SVG)
         const isImageFile =
           header === "89504e47" || // PNG
           header === "ffd8ffe0" || header === "ffd8ffe1" || header === "ffd8ffe2" || // JPEG
@@ -174,7 +182,7 @@ const OrganizationImageUploader = ({
       (url.startsWith("http://localhost:3000/") ||
         url.startsWith("https://localhost:3000/") ||
         url.startsWith("https://your-trusted-cdn.com/")) &&
-      /\.(png|jpe?g|gif|webp)$/i.test(url)
+      /\.(png|jpe?g|gif|webp)$/i.test(url) // DO NOT ALLOW svg
     )
       return true;
     return false;
