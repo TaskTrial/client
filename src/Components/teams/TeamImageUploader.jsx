@@ -5,6 +5,44 @@ import { useNavigate } from "react-router-dom";
 import AccessToken from "../auth/AccessToken";
 import { useSelector, useDispatch } from "react-redux";
 
+
+// Helper function to check image magic numbers for PNG, JPEG, GIF, WEBP
+async function isAllowedImageMagicNumber(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = (e) => {
+      const arr = new Uint8Array(e.target.result);
+      // PNG: 89 50 4E 47 0D 0A 1A 0A
+      if (arr.length > 7 && arr[0] === 0x89 && arr[1] === 0x50 && arr[2] === 0x4E && arr[3] === 0x47 && arr[4] === 0x0D && arr[5] === 0x0A && arr[6] === 0x1A && arr[7] === 0x0A) {
+        resolve(true);
+        return;
+      }
+      // JPEG: FF D8 FF
+      if (arr.length > 2 && arr[0] === 0xFF && arr[1] === 0xD8 && arr[2] === 0xFF) {
+        resolve(true);
+        return;
+      }
+      // GIF: GIF87a or GIF89a
+      if (arr.length > 5 &&
+        arr[0] === 0x47 && arr[1] === 0x49 && arr[2] === 0x46 &&
+        arr[3] === 0x38 && (arr[4] === 0x39 || arr[4] === 0x37) && arr[5] === 0x61) {
+        resolve(true);
+        return;
+      }
+      // WEBP: RIFF....WEBP
+      if (arr.length > 11 &&
+        arr[0] === 0x52 && arr[1] === 0x49 && arr[2] === 0x46 && arr[3] === 0x46 &&
+        arr[8] === 0x57 && arr[9] === 0x45 && arr[10] === 0x42 && arr[11] === 0x50) {
+        resolve(true);
+        return;
+      }
+      resolve(false);
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsArrayBuffer(file.slice(0, 16));
+  });
+}
+
 const TeamImageUploader = ({ profilePicFromApi, setToast, setIsLoading }) => {
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -14,7 +52,7 @@ const TeamImageUploader = ({ profilePicFromApi, setToast, setIsLoading }) => {
   const userData = useSelector((state) => state.user);
   const teamsData = useSelector((state) => state.team);
   const teamId = teamsData.team.id;
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
       // Only allow certain safe image types (no SVG!)
@@ -32,7 +70,13 @@ const TeamImageUploader = ({ profilePicFromApi, setToast, setIsLoading }) => {
         e.target.value = '';
         return;
       }
-      // Optionally add more magic number checking here if extra defense is needed
+      // Magic number check (extra defense against SVG/malicious polyglot files)
+      const magicOk = await isAllowedImageMagicNumber(file);
+      if (!magicOk) {
+        setToast({ message: "This file does not appear to be a valid PNG, JPEG, GIF, or WEBP image.", type: "error" });
+        e.target.value = '';
+        return;
+      }
       setSelectedFile(file);
       setPreviewImage(URL.createObjectURL(file));
     }
